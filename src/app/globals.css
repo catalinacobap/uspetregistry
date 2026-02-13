@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  /* Primary */
+  --color-primary: #2d345f;
+  --color-primary-hover: #3a4270;
+  --color-on-primary: #fef8fc;
+
+  /* Body & text */
+  --color-body-dark: #1b323b;
+  --color-muted: #626787;
+  --color-text-secondary: #4d4d4d;
+  --color-text-tertiary: #6b6b6b;
+  --color-ink: #000000;
+
+  /* Surfaces */
+  --color-white: #ffffff;
+  --color-surface-cream: #fefbf9;
+  --color-border: #e6e6e6;
+  --color-border-warm: #f6ebe4;
+
+  /* Accent */
+  --color-discount: #f46470;
+  --color-success: #237c55;
+  --color-success-bg: #f5faf8;
+
+  /* Decorative */
+  --color-decor-blue-400: #60a5fa;
+  --color-decor-blue-500: #3b82f6;
+  --color-decor-yellow-300: #fde047;
+  --color-decor-purple-300: #d8b4fe;
+
+  /* Shadows */
+  --shadow-primary: 0px 0px 11px rgba(26, 51, 95, 0.24);
+  --shadow-card: 0px 3px 21px rgba(234, 234, 234, 0.25);
+  --shadow-card-alt: 0px 3px 21px rgba(194, 194, 194, 0.25);
+  --shadow-subtle: 0px 0px 12px rgba(119, 119, 119, 0.1);
+  --shadow-icon: 0px 0px 10px rgba(119, 119, 119, 0.01);
+}
