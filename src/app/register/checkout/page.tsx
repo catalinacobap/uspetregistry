@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
 import { ReviewCard } from "@/components/ReviewCard";
@@ -33,6 +34,34 @@ const INCLUDED_ITEMS = [
 ];
 
 export default function CheckoutPage() {
+  const [loading, setLoading] = useState(false);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  async function handleCheckout() {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: nameRef.current?.value,
+          email: emailRef.current?.value,
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || "Something went wrong");
+        setLoading(false);
+      }
+    } catch {
+      alert("Something went wrong");
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
       <CheckoutHeader />
@@ -212,12 +241,14 @@ export default function CheckoutPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
+              ref={nameRef}
               type="text"
               placeholder="Name"
               defaultValue="Test"
               className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
             <input
+              ref={emailRef}
               type="email"
               placeholder="Email"
               defaultValue="test@test.com"
@@ -272,10 +303,12 @@ export default function CheckoutPage() {
           </p>
           <button
             type="button"
-            className="w-full py-4 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-sans font-bold text-base hover:bg-[var(--color-primary-hover)] transition-colors"
+            onClick={handleCheckout}
+            disabled={loading}
+            className="w-full py-4 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-sans font-bold text-base hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-50"
             style={{ boxShadow: "var(--shadow-primary)" }}
           >
-            Pay $192.24 - Complete Order
+            {loading ? "Redirecting to payment..." : "Pay $192.24 - Complete Order"}
           </button>
         </div>
 
