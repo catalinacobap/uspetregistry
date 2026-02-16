@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { createServerSupabase } from "@/lib/supabase-server";
+import { getCheckoutTotal, DEFAULT_TOTAL_CENTS } from "@/lib/checkoutPricing";
 
 function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -9,16 +11,30 @@ function getStripe(): Stripe {
   return new Stripe(key, { apiVersion: "2026-01-28.clover" });
 }
 
-const AMOUNT_CENTS = 19224; // $192.24
-
 export async function POST(req: NextRequest) {
   try {
     const stripe = getStripe();
     const body = await req.json();
     const { email, name, registration_id } = body;
 
+    let amountCents = DEFAULT_TOTAL_CENTS;
+
+    if (registration_id) {
+      const supabase = createServerSupabase();
+      const { data } = await supabase
+        .from("registrations")
+        .select("answers")
+        .eq("id", registration_id)
+        .single();
+
+      if (data?.answers && typeof data.answers === "object") {
+        const total = getCheckoutTotal(data.answers as Record<string, string | string[]>);
+        amountCents = total.totalCents;
+      }
+    }
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: AMOUNT_CENTS,
+      amount: amountCents,
       currency: "usd",
       automatic_payment_methods: { enabled: true },
       metadata: {
