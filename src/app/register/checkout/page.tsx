@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
 import { ReviewCard } from "@/components/ReviewCard";
@@ -33,10 +34,44 @@ const INCLUDED_ITEMS = [
   "Live anywhere with your pet free of charge",
 ];
 
+type Registration = {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+};
+
 export default function CheckoutPage() {
+  const searchParams = useSearchParams();
+  const registrationId = searchParams.get("registration_id");
+
   const [loading, setLoading] = useState(false);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
+  const [registration, setRegistration] = useState<Registration | null>(null);
+  const [registrationLoadError, setRegistrationLoadError] = useState<string | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    if (!registrationId) return;
+    let cancelled = false;
+    fetch(`/api/registrations/${registrationId}`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error("Not found"))))
+      .then((data: Registration) => {
+        if (!cancelled) {
+          setRegistration(data);
+          setName(data.fullName ?? "");
+          setEmail(data.email ?? "");
+          setPhone(data.phone ?? "");
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setRegistrationLoadError("Could not load your registration.");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [registrationId]);
 
   async function handleCheckout() {
     setLoading(true);
@@ -45,8 +80,9 @@ export default function CheckoutPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: nameRef.current?.value,
-          email: emailRef.current?.value,
+          name: name || registration?.fullName,
+          email: email || registration?.email,
+          registration_id: registrationId ?? undefined,
         }),
       });
       const data = await res.json();
@@ -239,25 +275,29 @@ export default function CheckoutPage() {
           <h2 className="text-[var(--color-body-dark)] font-sans font-bold text-lg mb-4">
             Contact Information
           </h2>
+          {registrationLoadError && (
+            <p className="text-red-600 font-sans text-sm mb-4">{registrationLoadError}</p>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
-              ref={nameRef}
               type="text"
               placeholder="Name"
-              defaultValue="Test"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
             <input
-              ref={emailRef}
               type="email"
               placeholder="Email"
-              defaultValue="test@test.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
             <input
               type="tel"
               placeholder="Phone"
-              defaultValue="(123) 456-7776"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
           </div>

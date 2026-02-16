@@ -90,9 +90,9 @@ export function PricingSection() {
           </motion.p>
         </div>
 
-        {/* Pricing Table - horizontal scroll on mobile */}
+        {/* Pricing Table - fits viewport on mobile, no horizontal scroll */}
         <motion.div
-          className="w-full max-w-6xl bg-white rounded-3xl p-[50px] shadow-lg max-md:p-4 max-md:overflow-x-auto max-md:max-w-full"
+          className="w-full max-w-6xl bg-white rounded-3xl p-[50px] shadow-lg max-md:p-4 max-md:overflow-visible"
           style={{
             boxShadow: "var(--shadow-card-alt)"
           }}
@@ -100,14 +100,11 @@ export function PricingSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
         >
-          <div className="flex flex-col gap-6 max-md:min-w-[480px]">
-            {/* Table Headers */}
-            <div className="flex items-center border-b border-[var(--color-border)] pb-6 max-md:pb-4">
-              {/* Empty space for feature column */}
-              <div className="flex-1 max-md:min-w-[140px]"></div>
-              
-              {/* Standard Header */}
-              <div className="w-[280px] max-md:w-[160px] max-md:flex-shrink-0">
+          <div className="flex flex-col gap-6 w-full min-w-0">
+            {/* Table Headers - on mobile three equal columns so full names + pricing fit */}
+            <div className="flex items-stretch w-full min-w-0 border-b border-[var(--color-border)] pb-6 max-md:pb-4">
+              <div className="flex-1 min-w-0" aria-hidden />
+              <div className="w-[280px] max-md:flex-1 max-md:min-w-0 max-md:flex max-md:flex-col max-md:items-center max-md:justify-center">
                 <PricingHeader
                   title="Standard ESA Letter"
                   currentPrice="$128"
@@ -116,9 +113,7 @@ export function PricingSection() {
                   delay={0.6}
                 />
               </div>
-              
-              {/* Premium Header */}
-              <div className="w-[280px] max-md:w-[160px] max-md:flex-shrink-0">
+              <div className="w-[280px] max-md:flex-1 max-md:min-w-0 max-md:flex max-md:flex-col max-md:items-center max-md:justify-center">
                 <PricingHeader
                   title="Premium ESA Letter"
                   currentPrice="$159"

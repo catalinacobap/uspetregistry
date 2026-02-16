@@ -70,14 +70,14 @@ export function CTASection() {
             </Link>
           </motion.div>
           
-          {/* Note */}
+          {/* Note - all blue, bold, condensed spacing, center-aligned to match design */}
           <motion.p 
-            className="text-[var(--color-primary)] font-sans font-normal text-base leading-[20px] max-w-[500px] mt-8 max-md:max-w-full max-md:mt-6 max-md:mb-40 max-md:text-sm max-md:px-2"
+            className="text-[var(--color-primary)] font-inter font-bold text-base leading-snug tracking-tight max-w-[500px] mt-8 max-md:max-w-full max-md:mt-6 max-md:mb-40 max-md:text-sm max-md:px-2 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
           >
-            <span className="font-bold">Note:</span> Airlines no longer recognize ESAs for air travel. For flights, your animal must qualify as a Psychiatric Service Dog (PSD).
+            Note: Airlines no longer recognize ESAs for air travel. For flights, your animal must qualify as a Psychiatric Service Dog (PSD).
           </motion.p>
         </div>
       </div>

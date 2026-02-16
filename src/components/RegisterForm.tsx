@@ -9,7 +9,7 @@ import { REGISTER_STEPS, TOTAL_REGISTER_STEPS } from "@/lib/registerSteps";
 const STEP_AGE_18 = 2; // "Are you 18 years of age or older?"
 
 const optionButtonBase =
-  "w-full py-4 px-6 rounded-xl font-serif font-bold text-lg transition-all cursor-pointer ";
+  "w-full py-4 px-6 rounded-xl font-serif font-bold text-base transition-all cursor-pointer ";
 const optionSelected =
   "bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-lg";
 const optionUnselected =
@@ -27,6 +27,7 @@ export function RegisterForm() {
   const [autoRenew, setAutoRenew] = useState(false);
   const [countdown, setCountdown] = useState({ minutes: 10, seconds: 15 });
   const [under18Blocked, setUnder18Blocked] = useState(false);
+  const [checkoutSaving, setCheckoutSaving] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -80,6 +81,34 @@ export function RegisterForm() {
     if (step < TOTAL_REGISTER_STEPS) setStep((s) => s + 1);
   };
 
+  const handleProceedToCheckout = async () => {
+    setCheckoutSaving(true);
+    try {
+      const res = await fetch("/api/registrations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          answers,
+          email,
+          termsAccepted,
+          fullName,
+          phone,
+          autoRenew,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error ?? "Failed to save. Please try again.");
+        setCheckoutSaving(false);
+        return;
+      }
+      router.push(`/register/checkout?registration_id=${data.id}`);
+    } catch {
+      alert("Something went wrong. Please try again.");
+      setCheckoutSaving(false);
+    }
+  };
+
   useEffect(() => {
     const config = REGISTER_STEPS[step - 1];
     if (config?.type === "eligible" || config?.type === "therapist" || config?.type === "finalizing") {
@@ -96,7 +125,7 @@ export function RegisterForm() {
       const isAgeStep = step === STEP_AGE_18;
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full flex flex-col gap-3">
@@ -113,15 +142,15 @@ export function RegisterForm() {
           </div>
           {isAgeStep && under18Blocked && (
             <div className="w-full mt-4 p-4 rounded-xl bg-[var(--color-discount)]/10 border border-[var(--color-discount)]/30 text-center">
-              <p className="font-sans text-[var(--color-primary)] font-medium">
+              <p className="font-serif text-base text-[var(--color-primary)] font-medium">
                 You must be 18 years of age or older to continue with this service.
               </p>
-              <p className="font-sans text-sm text-[var(--color-muted)] mt-2">
+              <p className="font-serif text-base text-[var(--color-muted)] mt-2">
                 Select &quot;Yes&quot; above if you are 18 or older, or return to the home page.
               </p>
               <Link
                 href="/"
-                className="inline-block mt-3 font-sans text-sm font-bold text-[var(--color-primary)] underline hover:no-underline"
+                className="inline-block mt-3 font-serif text-base font-bold text-[var(--color-primary)] underline hover:no-underline"
               >
                 Return to home
               </Link>
@@ -134,7 +163,7 @@ export function RegisterForm() {
     if (config.type === "multi") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -164,14 +193,14 @@ export function RegisterForm() {
       const val = (selectedValue as string) || "";
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full flex flex-col gap-3">
             <select
               value={val}
               onChange={(e) => setAnswers((prev) => ({ ...prev, [step]: e.target.value }))}
-              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-sans text-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
             >
               <option value="">Select state</option>
               {config.options.map((state) => (
@@ -196,7 +225,7 @@ export function RegisterForm() {
     if (config.type === "email") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
             {config.title}
           </h2>
           <div className="w-full flex flex-col gap-4">
@@ -205,7 +234,7 @@ export function RegisterForm() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-sans text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
+              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
             />
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -214,7 +243,7 @@ export function RegisterForm() {
                 onChange={(e) => setTermsAccepted(e.target.checked)}
                 className="rounded border-2 border-[var(--color-primary)]"
               />
-              <span className="font-sans text-sm text-[var(--color-primary)]">
+              <span className="font-serif text-base text-[var(--color-primary)]">
                 I agree to the Terms & Conditions and have read the{" "}
                 <Link href="/privacy" className="underline">Privacy Policy</Link>
               </span>
@@ -239,13 +268,13 @@ export function RegisterForm() {
     if (config.type === "eligible") {
       return (
         <div className="flex flex-col items-center gap-6">
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
             {config.title}
           </h2>
           <div className="w-12 h-12 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
           <div className="flex gap-2">
             {[1, 2, 3].map((i) => (
-              <span key={i} className="w-6 h-6 rounded-full bg-[var(--color-success)] text-white flex items-center justify-center text-xs">✓</span>
+              <span key={i} className="w-6 h-6 rounded-full bg-[var(--color-success)] text-white flex items-center justify-center font-serif text-base">✓</span>
             ))}
           </div>
         </div>
@@ -255,7 +284,7 @@ export function RegisterForm() {
     if (config.type === "therapist") {
       return (
         <div className="flex flex-col items-center gap-6">
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
             {config.title}
           </h2>
           <div className="w-full max-w-xs h-2 bg-[var(--color-border)] rounded-full overflow-hidden">
@@ -268,7 +297,7 @@ export function RegisterForm() {
           </div>
           <div className="flex gap-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="w-14 h-14 rounded-full bg-[var(--color-border)] flex items-center justify-center text-[var(--color-muted)] font-serif text-lg">
+              <div key={i} className="w-14 h-14 rounded-full bg-[var(--color-border)] flex items-center justify-center text-[var(--color-muted)] font-serif text-base">
                 ?
               </div>
             ))}
@@ -298,7 +327,7 @@ export function RegisterForm() {
               transition={{ duration: 1.5, ease: "easeOut" }}
             />
           </div>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-xl md:text-2xl text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
             {config.title}
           </h2>
           {/* Milestone icons: document/pen, therapist, checkmark */}
@@ -320,18 +349,19 @@ export function RegisterForm() {
     if (config.type === "checkout") {
       return (
         <div className="flex flex-col items-center gap-6">
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
             {config.title}
           </h2>
-          <p className="text-[var(--color-muted)] font-sans text-center max-w-md">
+          <p className="text-[var(--color-muted)] font-serif text-base text-center max-w-md">
             You’re all set. Proceed to complete your purchase.
           </p>
           <button
             type="button"
-            onClick={() => router.push("/register/checkout")}
-            className={optionButtonBase + optionSelected + " w-full max-w-xs"}
+            disabled={checkoutSaving}
+            onClick={handleProceedToCheckout}
+            className={optionButtonBase + optionSelected + " w-full max-w-xs disabled:opacity-50 disabled:cursor-not-allowed"}
           >
-            Proceed to checkout
+            {checkoutSaving ? "Saving…" : "Proceed to checkout"}
           </button>
         </div>
       );
@@ -340,7 +370,7 @@ export function RegisterForm() {
     if (config.type === "prequal") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
             {config.title}
           </h2>
           <div className="w-full flex flex-col gap-4">
@@ -349,14 +379,14 @@ export function RegisterForm() {
               placeholder="Full Name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-sans text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
+              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
             />
             <input
               type="tel"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-sans text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
+              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
             />
             <button
               type="button"
@@ -375,7 +405,7 @@ export function RegisterForm() {
       const pkg = (selectedValue as string) || "";
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
             Package Selection
           </h2>
           <div className="w-full flex flex-col gap-3">
@@ -384,8 +414,8 @@ export function RegisterForm() {
               onClick={() => handleSelect("standard")}
               className={`text-left py-4 px-6 rounded-xl border-2 transition-all cursor-pointer ${pkg === "standard" ? optionSelected : optionUnselected}`}
             >
-              <span className="font-serif font-bold text-lg block">Standard Package — $128</span>
-              <span className="font-sans text-sm opacity-90 mt-1 block">
+              <span className="font-serif font-bold text-base block">Standard Package — $128</span>
+              <span className="font-serif text-base opacity-90 mt-1 block">
                 Includes: Therapist certified ESA letter, FHA protection, Emotional support evaluation, ESA registry
               </span>
             </button>
@@ -394,8 +424,8 @@ export function RegisterForm() {
               onClick={() => handleSelect("premium")}
               className={`text-left py-4 px-6 rounded-xl border-2 transition-all cursor-pointer ${pkg === "premium" ? optionSelected : optionUnselected}`}
             >
-              <span className="font-serif font-bold text-lg block">Premium Package — $159</span>
-              <span className="font-sans text-sm opacity-90 mt-1 block">
+              <span className="font-serif font-bold text-base block">Premium Package — $159</span>
+              <span className="font-serif text-base opacity-90 mt-1 block">
                 Includes: Everything in Standard, Premium support
               </span>
             </button>
@@ -408,7 +438,7 @@ export function RegisterForm() {
       const speed = (selectedValue as string) || "";
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full flex flex-col gap-3">
@@ -433,7 +463,7 @@ export function RegisterForm() {
                 onChange={(e) => setAutoRenew(e.target.checked)}
                 className="rounded border-2 border-[var(--color-primary)]"
               />
-              <span className="font-sans text-sm text-[var(--color-primary)]">Auto-renew subscription</span>
+              <span className="font-serif text-base text-[var(--color-primary)]">Auto-renew subscription</span>
             </label>
             <button
               type="button"
@@ -453,20 +483,23 @@ export function RegisterForm() {
 
   const config = REGISTER_STEPS[step - 1];
   const showProgress = config && config.type !== "eligible" && config.type !== "therapist" && config.type !== "finalizing";
-  const progressPct = (step / TOTAL_REGISTER_STEPS) * 100;
 
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <div className="relative min-h-screen flex flex-col min-h-[100dvh]">
+      {/* Background image - on mobile start at ~55%, fill to bottom (match search-registry); on desktop full cover */}
       <div
-        className="absolute inset-0 bg-no-repeat bg-cover bg-center -z-10"
-        style={{ backgroundImage: "url('/images/other/bg.PNG')" }}
+        className="absolute inset-0 max-md:top-[55%] bg-no-repeat -z-10 bg-cover bg-bottom max-md:bg-cover max-md:bg-bottom"
+        style={{
+          backgroundImage: "url('/images/other/bg.PNG')",
+          backgroundColor: "var(--color-surface-cream)",
+        }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#FFFFFF] to-transparent -z-10"
         aria-hidden
       />
-      <header className="relative z-10 w-full py-4 px-4 md:px-8 flex items-center justify-between">
+      <header className="relative z-10 w-full pt-20 pb-20 md:pt-24 md:pb-24 px-4 md:px-8 flex items-center justify-between">
         {step > 1 ? (
           <button
             type="button"
@@ -509,24 +542,31 @@ export function RegisterForm() {
 
       {showProgress && (
         <div className="w-full px-4 md:px-8 flex justify-center">
-          <div className="w-full max-w-md h-1.5 rounded-full bg-[var(--color-border)] overflow-hidden">
-            <motion.div
-              className="h-full bg-[var(--color-primary)] rounded-full"
-              initial={false}
-              animate={{ width: `${progressPct}%` }}
-              transition={{ duration: 0.3 }}
-            />
+          <div className="w-full max-w-md flex gap-1" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={TOTAL_REGISTER_STEPS}>
+            {Array.from({ length: TOTAL_REGISTER_STEPS }, (_, i) => {
+              const isCurrentOrCompleted = i + 1 <= step;
+              return (
+                <div
+                  key={i}
+                  className={`h-1.5 flex-1 min-w-0 rounded-sm transition-all duration-300 ${
+                    isCurrentOrCompleted
+                      ? "bg-[var(--color-primary)]"
+                      : "bg-transparent border border-dashed border-[var(--color-border)]"
+                  }`}
+                />
+              );
+            })}
           </div>
         </div>
       )}
 
       <div className="w-full px-4 md:px-8 mt-3 flex justify-center">
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-[var(--color-success)] text-white font-sans text-sm font-medium">
+        <div className="inline-flex items-center px-4 py-2 rounded-full bg-[var(--color-success)] text-white font-serif text-base font-medium">
           Full refund if your letter is not approved
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-8 md:py-12 relative overflow-hidden">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-8 md:py-12 relative overflow-hidden font-serif text-base">
         <div className="relative z-10 w-full max-w-lg mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
@@ -543,20 +583,20 @@ export function RegisterForm() {
         </div>
       </div>
 
-      <footer className="w-full py-4 px-4 md:px-8 bg-white border-t border-[var(--color-border)]">
-        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-2 text-center">
-          <p className="font-sans text-sm text-[#303952]">
-            Get 20% off your ESA consultation by booking in the next
+      {/* Discount banner - light beige, dark blue serif bold; desktop centered, mobile unchanged */}
+      <footer className="w-full py-4 px-4 md:px-8 bg-[var(--color-surface-cream)] border-t border-[var(--color-border)]">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3 md:justify-center md:text-center">
+          <p className="text-[var(--color-primary)] font-serif font-bold text-base max-md:text-left max-md:flex-1 max-md:min-w-0">
+            Get 20% off your ESA consultation
+            <br className="max-md:block md:hidden" />
+            by booking in the next
           </p>
-          <div
-            className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-[#303952] text-white shadow-md"
-            style={{ boxShadow: "0 2px 8px rgba(48, 57, 82, 0.25)" }}
-          >
+          <div className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-[var(--color-primary)] text-white shrink-0">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 6v6l4 2" />
             </svg>
-            <span className="font-mono font-bold tabular-nums text-sm">
+            <span className="font-serif font-bold tabular-nums text-base">
               {String(countdown.minutes).padStart(2, "0")}:{String(countdown.seconds).padStart(2, "0")}
             </span>
           </div>

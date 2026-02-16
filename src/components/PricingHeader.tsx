@@ -19,28 +19,28 @@ export function PricingHeader({
 }: PricingHeaderProps) {
   return (
     <motion.div
-      className="flex flex-col items-center py-[18px] px-[31px] gap-2.5 max-md:py-3 max-md:px-4"
+      className="flex flex-col items-center justify-center py-[18px] px-[31px] gap-2.5 max-md:py-3 max-md:px-2 max-md:gap-1"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5, ease: "easeOut" }}
     >
-      {/* Title */}
-      <h3 className="text-[var(--color-primary)] font-serif font-bold text-2xl leading-[31px] text-center max-md:text-lg max-md:leading-6">
+      {/* Product name - PT Serif 16px bold, full name (wraps on mobile) */}
+      <h3 className="text-[var(--color-primary)] font-serif font-bold text-[16px] leading-tight text-center">
         {title}
       </h3>
       
-      {/* Price */}
-      <div className="text-center">
-        <span className="text-[var(--color-primary)] font-inter font-bold text-2xl leading-[31px] max-md:text-xl max-md:leading-7">
-          {currentPrice}{" "}
+      {/* Current price - Inter 24px bold blue; Original - Inter 16px bold red strikethrough */}
+      <div className="flex flex-col items-center gap-0 text-center">
+        <span className="font-inter text-[var(--color-primary)] font-bold text-[24px] leading-tight">
+          {currentPrice}
         </span>
-        <span className="text-[var(--color-discount)] font-inter font-semibold text-2xl leading-[31px] line-through max-md:text-lg">
+        <span className="font-inter text-[var(--color-discount)] font-bold text-[16px] line-through leading-tight">
           {originalPrice}
         </span>
       </div>
       
-      {/* Discount */}
-      <p className="text-[var(--color-primary)] font-inter font-normal text-2xl leading-[31px] text-center max-md:text-base">
+      {/* Discount - Inter 14px regular */}
+      <p className="font-inter text-[var(--color-body-dark)] font-normal text-[14px] leading-tight text-center">
         {discount}
       </p>
     </motion.div>

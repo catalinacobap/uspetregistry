@@ -18,7 +18,7 @@ export function PricingRow({
   const renderIcon = (included: boolean | string) => {
     if (typeof included === 'string') {
       return (
-        <span className="text-[var(--color-primary)] font-inter font-semibold text-2xl leading-[31px] text-center max-md:text-base">
+        <span className="text-[var(--color-primary)] font-serif text-[16px] font-bold leading-tight text-center">
           {included}
         </span>
       );
@@ -38,25 +38,25 @@ export function PricingRow({
 
   return (
     <motion.div
-      className="flex items-center w-full border-b border-[var(--color-border)] last:border-b-0 max-md:min-w-[480px]"
+      className="flex items-center w-full min-w-0 border-b border-[var(--color-border)] last:border-b-0"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4, ease: "easeOut" }}
     >
-      {/* Feature Name */}
-      <div className="flex-1 py-[18px] px-[31px] max-md:py-3 max-md:px-4 max-md:min-w-[140px] max-md:px-3">
-        <h3 className="text-[var(--color-primary)] font-serif font-bold text-2xl leading-[31px] text-left max-md:text-base max-md:leading-5">
+      {/* Feature name - PT Serif 16px bold dark blue, wraps */}
+      <div className="flex-1 min-w-0 py-[18px] px-[31px] max-md:py-3 max-md:px-2">
+        <h3 className="text-[var(--color-primary)] font-serif font-bold text-[16px] leading-tight text-left">
           {feature}
         </h3>
       </div>
       
-      {/* Standard Column */}
-      <div className="w-[280px] flex justify-center items-center py-[18px] px-[31px] max-md:w-[160px] max-md:py-3 max-md:px-3 flex-shrink-0">
+      {/* Standard column - same width as header on mobile (flex-1) */}
+      <div className="w-[280px] flex justify-center items-center py-[18px] px-[31px] max-md:flex-1 max-md:min-w-0 max-md:py-3 max-md:px-2 shrink-0">
         {renderIcon(standardIncluded)}
       </div>
       
-      {/* Premium Column */}
-      <div className="w-[280px] flex justify-center items-center py-[18px] px-[31px] max-md:w-[160px] max-md:py-3 max-md:px-3 flex-shrink-0">
+      {/* Premium column - same width as header on mobile (flex-1) */}
+      <div className="w-[280px] flex justify-center items-center py-[18px] px-[31px] max-md:flex-1 max-md:min-w-0 max-md:py-3 max-md:px-2 shrink-0">
         {renderIcon(premiumIncluded)}
       </div>
     </motion.div>
