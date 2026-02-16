@@ -416,6 +416,9 @@ export function RegisterForm() {
               className={`text-left py-4 px-6 rounded-xl border-2 transition-all cursor-pointer ${pkg === "standard" ? optionSelected : optionUnselected}`}
             >
               <span className="font-serif font-bold text-base block">Standard Package — $128</span>
+              <span className="font-serif text-sm text-[var(--color-success)] font-medium mt-0.5 block">
+                20% discount applied (list price $160)
+              </span>
               <span className="font-serif text-base opacity-90 mt-1 block">
                 Includes: Therapist certified ESA letter, FHA protection, Emotional support evaluation, ESA registry
               </span>

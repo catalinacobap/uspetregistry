@@ -7,6 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
 import { ReviewCard } from "@/components/ReviewCard";
+import { getCheckoutTotal } from "@/lib/checkoutPricing";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -45,6 +46,7 @@ type Registration = {
   fullName: string;
   email: string;
   phone: string;
+  answers?: Record<string, string | string[]>;
 };
 
 const cardElementOptions = {
@@ -67,6 +69,7 @@ function PaymentForm({
   registration,
   loading,
   setLoading,
+  totalDisplay,
 }: {
   name: string;
   email: string;
@@ -74,6 +77,7 @@ function PaymentForm({
   registration: Registration | null;
   loading: boolean;
   setLoading: (v: boolean) => void;
+  totalDisplay: string;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -135,7 +139,7 @@ function PaymentForm({
         className="w-full py-4 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-sans font-bold text-base hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-50"
         style={{ boxShadow: "var(--shadow-primary)" }}
       >
-        {loading ? "Processing…" : "Pay $192.24 - Complete Order"}
+        {loading ? "Processing…" : `Pay ${totalDisplay} - Complete Order`}
       </button>
     </form>
   );
@@ -172,6 +176,14 @@ function CheckoutContent() {
       cancelled = true;
     };
   }, [registrationId]);
+
+  const checkoutTotal = getCheckoutTotal(registration?.answers ?? {});
+
+  const nextBillingDate = (() => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() + 1);
+    return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+  })();
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
@@ -246,7 +258,7 @@ function CheckoutContent() {
               </p>
             </div>
 
-            {/* Order Summary */}
+            {/* Order Summary - based on registration package + speed */}
             <div
               className="bg-white rounded-xl p-6 shadow-sm border border-[var(--color-border)]"
               style={{ boxShadow: "var(--shadow-card)" }}
@@ -257,39 +269,44 @@ function CheckoutContent() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-start">
                   <div>
-                    <span className="text-[var(--color-body-dark)]">Official ESA Letter</span>
-                    <p className="text-[var(--color-text-tertiary)] text-xs mt-0.5">
-                      20% discount applied
-                    </p>
+                    <span className="text-[var(--color-body-dark)]">{checkoutTotal.packageLabel}</span>
+                    {checkoutTotal.packagePrice === 128 && (
+                      <p className="text-[var(--color-text-tertiary)] text-xs mt-0.5">
+                        20% discount applied
+                      </p>
+                    )}
                   </div>
                   <div className="text-right">
-                    <span className="line-through text-[var(--color-text-tertiary)] mr-2">
-                      $160
-                    </span>
+                    {checkoutTotal.packagePrice === 128 && (
+                      <span className="line-through text-[var(--color-text-tertiary)] mr-2">
+                        $160
+                      </span>
+                    )}
                     <span className="text-[var(--color-body-dark)] font-medium">
-                      $128
+                      ${checkoutTotal.packagePrice}
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-start">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[var(--color-body-dark)]">
-                      Express Processing (within 24 hours)
-                    </span>
-                    <span className="inline-flex w-4 h-4 rounded border-2 border-[var(--color-primary)] bg-[var(--color-primary)]">
-                      <svg className="w-full h-full text-white p-0.5" viewBox="0 0 12 10" fill="none">
-                        <path d="M1 5l3 3 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
+                {checkoutTotal.expressAddon > 0 && (
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[var(--color-body-dark)]">
+                        Express Processing (within 24 hours)
+                      </span>
+                      <span className="inline-flex w-4 h-4 rounded border-2 border-[var(--color-primary)] bg-[var(--color-primary)]">
+                        <svg className="w-full h-full text-white p-0.5" viewBox="0 0 12 10" fill="none">
+                          <path d="M1 5l3 3 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[var(--color-body-dark)]">+${checkoutTotal.expressAddon}</span>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[var(--color-body-dark)]">$50</span>
-                    <p className="text-[var(--color-text-tertiary)] text-xs">+$50</p>
-                  </div>
-                </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-[var(--color-body-dark)]">Tax</span>
-                  <span className="text-[var(--color-body-dark)]">$14.24</span>
+                  <span className="text-[var(--color-body-dark)]">${checkoutTotal.tax.toFixed(2)}</span>
                 </div>
               </div>
               <div className="border-t border-[var(--color-border)] my-4 pt-4 flex justify-between items-center">
@@ -297,7 +314,7 @@ function CheckoutContent() {
                   Total
                 </span>
                 <span className="text-[var(--color-body-dark)] font-sans font-bold text-lg">
-                  $192.24
+                  ${checkoutTotal.total.toFixed(2)}
                 </span>
               </div>
               <label className="flex items-start gap-3 cursor-pointer mt-4">
@@ -309,7 +326,7 @@ function CheckoutContent() {
                   </span>
                   <p className="text-[var(--color-text-tertiary)] text-xs mt-1">
                     Your ESA letter will auto-renew every 12 months for $120. You
-                    can cancel anytime. Next billing: 2/13/2027
+                    can cancel anytime. Next billing: {nextBillingDate}
                   </p>
                 </div>
               </label>
@@ -394,6 +411,7 @@ function CheckoutContent() {
               registration={registration}
               loading={loading}
               setLoading={setLoading}
+              totalDisplay={checkoutTotal.total.toFixed(2)}
             />
           </Elements>
         </div>
