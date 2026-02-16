@@ -31,7 +31,7 @@ export function CheckoutHeader() {
           aria-label="US Pet Registry home"
         >
           <img
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3ced41e7-9c12-4102-acb4-d29270fa9f11"
+            src="/logo.png"
             alt="US Pet Registry"
             className="h-9 w-auto object-contain"
           />

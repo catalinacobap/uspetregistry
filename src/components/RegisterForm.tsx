@@ -10,11 +10,11 @@ import { FormPageLayout } from "@/components/FormPageLayout";
 const STEP_AGE_18 = 2; 
 
 const optionButtonBase =
-  "w-full py-4 px-6 rounded-xl font-serif font-bold text-[18px] transition-all cursor-pointer ";
+  "w-full py-4 px-6 rounded-[6px] font-serif font-bold text-[18px] transition-all cursor-pointer border border-[#2D345F] ";
 const optionSelected =
-  "bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-lg";
+  "bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-lg border-[var(--color-primary)]";
 const optionUnselected =
-  "bg-white border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] hover:shadow-lg";
+  "bg-[#F7F9FA] text-[#2D345F] hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] hover:border-[var(--color-primary)] hover:shadow-lg";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -522,9 +522,10 @@ export function RegisterForm() {
       countdown={countdown}
     >
       {/* Un mismo frame: Full refund, progress bar, pregunta y opciones */}
-      <div className="relative z-10 w-full max-w-lg mx-auto p-4 md:p-6 flex flex-col items-center gap-4 md:gap-5">
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-[var(--color-success)] text-white font-serif text-base font-medium">
-          Full refund if your letter is not approved
+      <div className="relative  mt-4 z-10 w-full max-w-lg mx-auto p-4 md:p-6 flex flex-col items-center gap-4 md:gap-5">
+        <div className="inline-flex flex-wrap mb-2 items-center gap-x-1 px-4 py-2 rounded-full bg-[#67B847] text-white font-serif text-base">
+          <span className="font-bold">Full refund</span>
+          <span className="font-normal">if your letter is not approved</span>
         </div>
         {showProgress && (
           <div className="w-full max-w-md" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={TOTAL_REGISTER_STEPS}>

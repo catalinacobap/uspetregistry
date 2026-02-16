@@ -27,7 +27,7 @@ export function FooterColumn({ title, links, delay = 0 }: FooterColumnProps) {
           <a
             key={index}
             href="#"
-            className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] hover:underline transition-all duration-200 max-md:text-sm"
+            className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] hover:underline transition-all duration-200 max-md:text-sm capitalize"
           >
             {link}
           </a>

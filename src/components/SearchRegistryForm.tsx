@@ -27,19 +27,20 @@ export function SearchRegistryForm() {
   return (
     <FormPageLayout
       leftSlot={<div aria-hidden />}
+      contentPadding="tight"
       countdown={countdown}
     >
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="relative z-10 w-full max-w-lg mx-auto"
+        className="relative z-10 w-full max-w-lg mx-auto mt-10 md:mt-26"
       >
         <form
           onSubmit={handleVerify}
           className="flex flex-col items-center gap-6"
         >
-          <h1 className="text-[var(--color-primary)] font-serif font-bold text-[32px] leading-tight text-center">
+          <h1 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             ESA Registration Lookup
           </h1>
 
@@ -60,7 +61,7 @@ export function SearchRegistryForm() {
               value={registrationId}
               onChange={(e) => setRegistrationId(e.target.value)}
               placeholder="e.g. ESA - 123456"
-              className="w-full py-4 px-5 rounded-lg border border-[var(--color-border)] bg-white font-serif text-[var(--color-primary)] placeholder:font-sans placeholder:text-gray-500 focus:border-[var(--color-primary)] focus:outline-none transition-colors"
+              className="w-full py-4 px-5 rounded-lg border border-[var(--color-border)] bg-white font-serif text-[var(--color-primary)] placeholder:font-sans placeholder:text-[#C2C2C2] focus:border-[var(--color-primary)] focus:outline-none transition-colors"
             />
           </div>
 

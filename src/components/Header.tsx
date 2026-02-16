@@ -59,7 +59,7 @@ export function Header() {
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
           <img
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3ced41e7-9c12-4102-acb4-d29270fa9f11"
+            src="/logo.png"
             alt="US Pet Registry Logo"
             className="w-full h-full object-contain"
           />

@@ -38,9 +38,9 @@ export function Footer() {
             <div className="flex flex-col gap-1.5 max-md:items-start">
               {/* Logo */}
               <img
-                src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3b15565d-d38f-4289-af6f-ac0e51affe3d"
+                src="/logo.png"
                 alt="US Pet Registry Logo"
-                className="w-[117px] h-[51px]"
+                className="w-[117px] h-[51px] object-contain"
               />
               
               {/* Description */}
@@ -73,14 +73,14 @@ export function Footer() {
           transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
         >
           {/* Copyright */}
-          <span className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] max-md:text-sm">
+          <span className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] max-md:text-sm capitalize">
             © US Pet Registry 2026
           </span>
           
           {/* Terms & Conditions */}
           <a
             href="#"
-            className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] underline hover:no-underline transition-all duration-200 max-md:text-sm"
+            className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] underline hover:no-underline transition-all duration-200 max-md:text-sm capitalize"
           >
             Terms & Conditions
           </a>
@@ -88,7 +88,7 @@ export function Footer() {
           {/* Privacy Policy */}
           <a
             href="#"
-            className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] underline hover:no-underline transition-all duration-200 max-md:text-sm"
+            className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] underline hover:no-underline transition-all duration-200 max-md:text-sm capitalize"
           >
             privacy policy
           </a>

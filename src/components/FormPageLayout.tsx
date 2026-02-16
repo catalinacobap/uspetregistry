@@ -22,23 +22,23 @@ export function FormPageLayout({
 }: FormPageLayoutProps) {
   return (
     <div className="relative min-h-screen flex flex-col min-h-[100dvh]">
-      {/* Background: on mobile start at ~55% so illustration shows in lower half; desktop full cover */}
+      {/* Background: mobile slightly enlarged to cover gap (115%), no stretch; desktop unchanged; gradient on top */}
       <div
-        className="absolute inset-0 max-md:top-[55%] bg-no-repeat -z-10 bg-cover bg-bottom max-md:bg-cover max-md:bg-bottom"
+        className="absolute inset-0 bg-no-repeat -z-10 bg-[center_85%] md:bg-[50%_50%] max-md:bg-[length:125%_auto] md:bg-[length:100%_auto]"
         style={{
           backgroundImage: "url('/images/other/bg.PNG')",
           backgroundColor: "var(--color-surface-cream)",
         }}
         aria-hidden
-      />
-      {/* Gradient overlay: same as hero, above the image */}
-      <div
-        className="pointer-events-none absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#FFFFFF] to-transparent -z-10"
-        aria-hidden
-      />
+      >
+        <div
+          className="absolute top-0 left-0 right-0 max-md:h-1/2 md:h-1/2 bg-[linear-gradient(to_bottom,#F7F9FA_50%,#F7F9FA_15%,transparent_100%)] pointer-events-none"
+          aria-hidden
+        />
+      </div>
 
       {/* Header: compact, logo only in center (like search-registry) */}
-      <header className="relative z-10 w-full py-4 px-4 md:px-8 flex items-center justify-between bg-white border-b border-[var(--color-border)]">
+      <header className="relative z-10 w-full h-[115px] min-h-[100px] px-4 md:px-8 flex items-center justify-between bg-white border-b border-[var(--color-border)]">
         <div className="w-10 shrink-0 flex items-center justify-center">
           {leftSlot}
         </div>
@@ -48,9 +48,9 @@ export function FormPageLayout({
           aria-label="US Pet Registry home"
         >
           <img
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3ced41e7-9c12-4102-acb4-d29270fa9f11"
+            src="/logo.png"
             alt="US Pet Registry"
-            className="h-9 w-auto object-contain"
+            className="h-14 w-auto object-contain md:h-20"
           />
         </Link>
         <Link
@@ -76,9 +76,9 @@ export function FormPageLayout({
       {topSlot}
 
       <div
-        className={`flex-1 flex flex-col items-center justify-center px-4 relative overflow-hidden font-serif text-base ${
+        className={`flex-1 flex flex-col items-center justify-start px-4 relative overflow-hidden font-serif text-base ${
           contentPadding === "tight"
-            ? "pt-3 pb-8 md:pt-4 md:pb-12"
+            ? "pt-10 pb-8 md:pt-12 md:pb-12"
             : "py-8 md:py-12"
         }`}
       >
