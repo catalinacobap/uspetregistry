@@ -3,8 +3,14 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
 import { ReviewCard } from "@/components/ReviewCard";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 const CHECKOUT_TESTIMONIALS = [
   {
@@ -41,6 +47,100 @@ type Registration = {
   phone: string;
 };
 
+const cardElementOptions = {
+  style: {
+    base: {
+      fontSize: "16px",
+      color: "var(--color-body-dark)",
+      "::placeholder": { color: "var(--color-text-tertiary)" },
+    },
+    invalid: {
+      color: "#c41e3a",
+    },
+  },
+};
+
+function PaymentForm({
+  name,
+  email,
+  registrationId,
+  registration,
+  loading,
+  setLoading,
+}: {
+  name: string;
+  email: string;
+  registrationId: string | null;
+  registration: Registration | null;
+  loading: boolean;
+  setLoading: (v: boolean) => void;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!stripe || !elements) return;
+    const cardElement = elements.getElement(CardElement);
+    if (!cardElement) return;
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name || registration?.fullName,
+          email: email || registration?.email,
+          registration_id: registrationId ?? undefined,
+        }),
+      });
+      const data = await res.json();
+      if (data.error) {
+        alert(data.error);
+        setLoading(false);
+        return;
+      }
+      const { error } = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: { card: cardElement },
+      });
+      if (error) {
+        alert(error.message ?? "Payment failed");
+        setLoading(false);
+        return;
+      }
+      window.location.href = `${window.location.origin}/register/checkout/success`;
+    } catch {
+      alert("Something went wrong");
+      setLoading(false);
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label className="block text-[var(--color-body-dark)] font-sans text-sm font-medium mb-2">
+          Card details
+        </label>
+        <div className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-white focus-within:ring-2 focus-within:ring-[var(--color-primary)]/30">
+          <CardElement options={cardElementOptions} />
+        </div>
+      </div>
+      <p className="text-[var(--color-text-tertiary)] text-xs mb-6">
+        Your payment information is encrypted and secure.
+      </p>
+      <button
+        type="submit"
+        disabled={loading || !stripe || !elements}
+        className="w-full py-4 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-sans font-bold text-base hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-50"
+        style={{ boxShadow: "var(--shadow-primary)" }}
+      >
+        {loading ? "Processing…" : "Pay $192.24 - Complete Order"}
+      </button>
+    </form>
+  );
+}
+
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const registrationId = searchParams.get("registration_id");
@@ -72,31 +172,6 @@ function CheckoutContent() {
       cancelled = true;
     };
   }, [registrationId]);
-
-  async function handleCheckout() {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name || registration?.fullName,
-          email: email || registration?.email,
-          registration_id: registrationId ?? undefined,
-        }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert(data.error || "Something went wrong");
-        setLoading(false);
-      }
-    } catch {
-      alert("Something went wrong");
-      setLoading(false);
-    }
-  }
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
@@ -311,45 +386,16 @@ function CheckoutContent() {
           <h2 className="text-[var(--color-body-dark)] font-sans font-bold text-lg mb-4">
             Payment Details
           </h2>
-          <button
-            type="button"
-            className="w-full py-3.5 rounded-lg bg-black text-white font-sans text-sm font-medium flex items-center justify-center gap-2 mb-4"
-          >
-            <span className="font-medium">G Pay</span>
-          </button>
-          <div className="flex gap-3 mb-2">
-            <div className="flex-1 relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-tertiary)]">
-                <svg width="24" height="16" viewBox="0 0 24 16" fill="none" className="opacity-70">
-                  <rect x="1" y="2" width="22" height="12" rx="2" fill="currentColor" opacity="0.2" />
-                  <rect x="4" y="5" width="4" height="6" rx="0.5" fill="currentColor" />
-                </svg>
-              </span>
-              <input
-                type="text"
-                placeholder="Card number"
-                className="w-full pl-12 pr-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
-              />
-            </div>
-            <button
-              type="button"
-              className="px-4 py-3 rounded-lg border border-[var(--color-border)] text-[#0ea36e] font-sans text-sm font-medium shrink-0"
-            >
-              link
-            </button>
-          </div>
-          <p className="text-[var(--color-text-tertiary)] text-xs mb-6">
-            Your payment information is encrypted and secure.
-          </p>
-          <button
-            type="button"
-            onClick={handleCheckout}
-            disabled={loading}
-            className="w-full py-4 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-sans font-bold text-base hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-50"
-            style={{ boxShadow: "var(--shadow-primary)" }}
-          >
-            {loading ? "Redirecting to payment..." : "Pay $192.24 - Complete Order"}
-          </button>
+          <Elements stripe={stripePromise} options={{ appearance: { theme: "stripe" } }}>
+            <PaymentForm
+              name={name}
+              email={email}
+              registrationId={registrationId}
+              registration={registration}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          </Elements>
         </div>
 
         {/* Stripe security footer */}
