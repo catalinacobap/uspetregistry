@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
 import { ReviewCard } from "@/components/ReviewCard";
@@ -32,7 +34,70 @@ const INCLUDED_ITEMS = [
   "Live anywhere with your pet free of charge",
 ];
 
-export default function CheckoutPage() {
+type Registration = {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+};
+
+function CheckoutContent() {
+  const searchParams = useSearchParams();
+  const registrationId = searchParams.get("registration_id");
+
+  const [loading, setLoading] = useState(false);
+  const [registration, setRegistration] = useState<Registration | null>(null);
+  const [registrationLoadError, setRegistrationLoadError] = useState<string | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    if (!registrationId) return;
+    let cancelled = false;
+    fetch(`/api/registrations/${registrationId}`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error("Not found"))))
+      .then((data: Registration) => {
+        if (!cancelled) {
+          setRegistration(data);
+          setName(data.fullName ?? "");
+          setEmail(data.email ?? "");
+          setPhone(data.phone ?? "");
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setRegistrationLoadError("Could not load your registration.");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [registrationId]);
+
+  async function handleCheckout() {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name || registration?.fullName,
+          email: email || registration?.email,
+          registration_id: registrationId ?? undefined,
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || "Something went wrong");
+        setLoading(false);
+      }
+    } catch {
+      alert("Something went wrong");
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
       <CheckoutHeader />
@@ -210,23 +275,29 @@ export default function CheckoutPage() {
           <h2 className="text-[var(--color-body-dark)] font-sans font-bold text-lg mb-4">
             Contact Information
           </h2>
+          {registrationLoadError && (
+            <p className="text-red-600 font-sans text-sm mb-4">{registrationLoadError}</p>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
               type="text"
               placeholder="Name"
-              defaultValue="Test"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
             <input
               type="email"
               placeholder="Email"
-              defaultValue="test@test.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
             <input
               type="tel"
               placeholder="Phone"
-              defaultValue="(123) 456-7776"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-body-dark)] font-sans text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
             />
           </div>
@@ -272,10 +343,12 @@ export default function CheckoutPage() {
           </p>
           <button
             type="button"
-            className="w-full py-4 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-sans font-bold text-base hover:bg-[var(--color-primary-hover)] transition-colors"
+            onClick={handleCheckout}
+            disabled={loading}
+            className="w-full py-4 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-sans font-bold text-base hover:bg-[var(--color-primary-hover)] transition-colors disabled:opacity-50"
             style={{ boxShadow: "var(--shadow-primary)" }}
           >
-            Pay $192.24 - Complete Order
+            {loading ? "Redirecting to payment..." : "Pay $192.24 - Complete Order"}
           </button>
         </div>
 
@@ -313,5 +386,22 @@ export default function CheckoutPage() {
         </section>
       </main>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f5f5f5]">
+          <CheckoutHeader />
+          <main className="w-full max-w-6xl mx-auto px-4 py-8 md:px-8 md:py-12 lg:px-12 flex items-center justify-center min-h-[50vh]">
+            <p className="text-[var(--color-body-dark)] font-sans">Loading checkout...</p>
+          </main>
+        </div>
+      }
+    >
+      <CheckoutContent />
+    </Suspense>
   );
 }

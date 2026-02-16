@@ -15,13 +15,13 @@ export function TrustLogoMarquee() {
           className="h-12 w-auto shrink-0 object-contain max-md:max-h-10 mr-16"
         />
       </Marquee>
-      {/* Gradient overlay like Hero: left to center, right to center */}
+      {/* White gradient on both sides: align to content edge on desktop (px-[374px]), full width on mobile */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-48 max-md:w-32 bg-gradient-to-r from-[#FFFFFF] to-transparent z-10"
+        className="pointer-events-none absolute inset-y-0 z-10 w-40 max-md:w-24 left-[374px] max-md:left-0 bg-gradient-to-r from-white via-white/40 to-transparent"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-48 max-md:w-32 bg-gradient-to-l from-[#FFFFFF] to-transparent z-10"
+        className="pointer-events-none absolute inset-y-0 z-10 w-40 max-md:w-24 right-[374px] max-md:right-0 bg-gradient-to-l from-white via-white/40 to-transparent"
         aria-hidden
       />
     </section>

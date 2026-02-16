@@ -35,7 +35,7 @@ const FAQ_DATA = [
   {
     question: "How long is the letter valid?",
     answer: "ESA letters are typically valid for one year from the date of issuance. After that, you'll need to renew your letter with an updated evaluation from a licensed mental health professional to maintain your housing accommodations."
-  }
+  },
 ];
 
 export function FAQSection() {

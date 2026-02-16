@@ -57,12 +57,12 @@ export function Hero() {
         >
           <Link
             href="/register"
-            className="flex justify-center items-center w-[182px] h-[53px] px-[10px] py-4 gap-2.5 bg-[var(--color-primary)] rounded-full cursor-pointer max-md:w-full max-md:max-w-[182px]"
+            className="flex justify-center items-center w-[182px] h-[53px] px-[10px] py-4 gap-2.5 bg-[var(--color-primary)] rounded-full cursor-pointer max-md:w-auto max-md:min-w-0 max-md:px-10 max-md:py-3.5 max-md:h-auto"
             style={{
               boxShadow: "var(--shadow-primary)",
             }}
           >
-            <span className="w-[87px] h-[21px] text-[var(--color-on-primary)] font-serif font-bold text-base leading-[21px] text-center max-md:w-auto">
+            <span className="text-[var(--color-on-primary)] font-serif font-bold text-[12px] md:text-[16px] leading-tight text-center">
               Get Started
             </span>
           </Link>

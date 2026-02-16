@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PT_Serif, Inclusive_Sans } from "next/font/google";
+import { PT_Serif, Inclusive_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
 const ptSerif = PT_Serif({
@@ -11,6 +11,12 @@ const ptSerif = PT_Serif({
 const inclusiveSans = Inclusive_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ptSerif.variable} ${inclusiveSans.variable} antialiased`}
+        className={`${ptSerif.variable} ${inclusiveSans.variable} ${inter.variable} antialiased`}
       >
         {children}
       </body>
