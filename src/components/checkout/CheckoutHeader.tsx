@@ -27,23 +27,14 @@ export function CheckoutHeader() {
         </Link>
         <Link
           href="/"
-          className="flex items-center gap-2 flex-shrink-0"
+          className="flex items-center justify-center flex-shrink-0"
           aria-label="US Pet Registry home"
         >
           <img
             src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3ced41e7-9c12-4102-acb4-d29270fa9f11"
-            alt=""
-            className="w-10 h-10 object-contain"
-            aria-hidden
+            alt="US Pet Registry"
+            className="h-9 w-auto object-contain"
           />
-          <span className="flex flex-col leading-tight">
-            <span className="text-[var(--color-primary)] font-serif font-bold text-lg">
-              US Pet
-            </span>
-            <span className="text-[#c41e3a] font-serif font-bold text-sm -mt-0.5">
-              Registry
-            </span>
-          </span>
         </Link>
       </div>
     </header>

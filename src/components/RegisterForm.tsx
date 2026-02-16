@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { REGISTER_STEPS, TOTAL_REGISTER_STEPS } from "@/lib/registerSteps";
+import { FormPageLayout } from "@/components/FormPageLayout";
 
-const STEP_AGE_18 = 2; // "Are you 18 years of age or older?"
+const STEP_AGE_18 = 2; 
 
 const optionButtonBase =
-  "w-full py-4 px-6 rounded-xl font-serif font-bold text-base transition-all cursor-pointer ";
+  "w-full py-4 px-6 rounded-xl font-serif font-bold text-[18px] transition-all cursor-pointer ";
 const optionSelected =
   "bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-lg";
 const optionUnselected =
@@ -125,7 +126,7 @@ export function RegisterForm() {
       const isAgeStep = step === STEP_AGE_18;
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full flex flex-col gap-3">
@@ -163,7 +164,7 @@ export function RegisterForm() {
     if (config.type === "multi") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -172,7 +173,7 @@ export function RegisterForm() {
                 key={opt.value}
                 type="button"
                 onClick={() => handleMultiToggle(opt.value)}
-                className={optionButtonBase + " py-3 px-4 text-base " + (selectedMulti.includes(opt.value) ? optionSelected : optionUnselected)}
+                className={optionButtonBase + " py-3 px-4 " + (selectedMulti.includes(opt.value) ? optionSelected : optionUnselected)}
               >
                 {opt.label}
               </button>
@@ -193,7 +194,7 @@ export function RegisterForm() {
       const val = (selectedValue as string) || "";
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full flex flex-col gap-3">
@@ -225,7 +226,7 @@ export function RegisterForm() {
     if (config.type === "email") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             {config.title}
           </h2>
           <div className="w-full flex flex-col gap-4">
@@ -268,7 +269,7 @@ export function RegisterForm() {
     if (config.type === "eligible") {
       return (
         <div className="flex flex-col items-center gap-6">
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] text-center">
             {config.title}
           </h2>
           <div className="w-12 h-12 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
@@ -284,7 +285,7 @@ export function RegisterForm() {
     if (config.type === "therapist") {
       return (
         <div className="flex flex-col items-center gap-6">
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] text-center">
             {config.title}
           </h2>
           <div className="w-full max-w-xs h-2 bg-[var(--color-border)] rounded-full overflow-hidden">
@@ -327,7 +328,7 @@ export function RegisterForm() {
               transition={{ duration: 1.5, ease: "easeOut" }}
             />
           </div>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] text-center">
             {config.title}
           </h2>
           {/* Milestone icons: document/pen, therapist, checkmark */}
@@ -349,7 +350,7 @@ export function RegisterForm() {
     if (config.type === "checkout") {
       return (
         <div className="flex flex-col items-center gap-6">
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] text-center">
             {config.title}
           </h2>
           <p className="text-[var(--color-muted)] font-serif text-base text-center max-w-md">
@@ -370,7 +371,7 @@ export function RegisterForm() {
     if (config.type === "prequal") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             {config.title}
           </h2>
           <div className="w-full flex flex-col gap-4">
@@ -405,7 +406,7 @@ export function RegisterForm() {
       const pkg = (selectedValue as string) || "";
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             Package Selection
           </h2>
           <div className="w-full flex flex-col gap-3">
@@ -438,7 +439,7 @@ export function RegisterForm() {
       const speed = (selectedValue as string) || "";
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-base leading-tight text-center">
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
             {config.question}
           </h2>
           <div className="w-full flex flex-col gap-3">
@@ -484,124 +485,67 @@ export function RegisterForm() {
   const config = REGISTER_STEPS[step - 1];
   const showProgress = config && config.type !== "eligible" && config.type !== "therapist" && config.type !== "finalizing";
 
-  return (
-    <div className="relative min-h-screen flex flex-col min-h-[100dvh]">
-      {/* Background image - on mobile start at ~55%, fill to bottom (match search-registry); on desktop full cover */}
-      <div
-        className="absolute inset-0 max-md:top-[55%] bg-no-repeat -z-10 bg-cover bg-bottom max-md:bg-cover max-md:bg-bottom"
-        style={{
-          backgroundImage: "url('/images/other/bg.PNG')",
-          backgroundColor: "var(--color-surface-cream)",
-        }}
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#FFFFFF] to-transparent -z-10"
-        aria-hidden
-      />
-      <header className="relative z-10 w-full pt-20 pb-20 md:pt-24 md:pb-24 px-4 md:px-8 flex items-center justify-between">
-        {step > 1 ? (
-          <button
-            type="button"
-            onClick={handleBack}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] transition-colors cursor-pointer shrink-0"
-            aria-label="Go back"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-        ) : (
-          <Link
-            href="/"
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] transition-colors cursor-pointer shrink-0"
-            aria-label="Go back"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </Link>
-        )}
-        <Link href="/" className="flex flex-col items-center gap-0.5" aria-label="US Pet Registry home">
-          <img
-            src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/3ced41e7-9c12-4102-acb4-d29270fa9f11"
-            alt="US Pet Registry"
-            className="h-9 w-auto object-contain"
-          />
-        </Link>
-        <Link
-          href="/"
+  const backButton = (
+    <>
+      {step > 1 ? (
+        <button
+          type="button"
+          onClick={handleBack}
           className="flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] transition-colors cursor-pointer shrink-0"
-          aria-label="Close"
+          aria-label="Go back"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 6L6 18M6 6l12 12" />
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+      ) : (
+        <Link
+          href="/"
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)] transition-colors shrink-0"
+          aria-label="Go back"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </Link>
-      </header>
-
-      {showProgress && (
-        <div className="w-full px-4 md:px-8 flex justify-center">
-          <div className="w-full max-w-md flex gap-1" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={TOTAL_REGISTER_STEPS}>
-            {Array.from({ length: TOTAL_REGISTER_STEPS }, (_, i) => {
-              const isCurrentOrCompleted = i + 1 <= step;
-              return (
-                <div
-                  key={i}
-                  className={`h-1.5 flex-1 min-w-0 rounded-sm transition-all duration-300 ${
-                    isCurrentOrCompleted
-                      ? "bg-[var(--color-primary)]"
-                      : "bg-transparent border border-dashed border-[var(--color-border)]"
-                  }`}
-                />
-              );
-            })}
-          </div>
-        </div>
       )}
+    </>
+  );
 
-      <div className="w-full px-4 md:px-8 mt-3 flex justify-center">
+  return (
+    <FormPageLayout
+      leftSlot={backButton}
+      contentPadding="tight"
+      countdown={countdown}
+    >
+      {/* Un mismo frame: Full refund, progress bar, pregunta y opciones */}
+      <div className="relative z-10 w-full max-w-lg mx-auto p-4 md:p-6 flex flex-col items-center gap-4 md:gap-5">
         <div className="inline-flex items-center px-4 py-2 rounded-full bg-[var(--color-success)] text-white font-serif text-base font-medium">
           Full refund if your letter is not approved
         </div>
-      </div>
-
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-8 md:py-12 relative overflow-hidden font-serif text-base">
-        <div className="relative z-10 w-full max-w-lg mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={step}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.25 }}
-              className="flex flex-col items-center gap-8"
-            >
-              {renderStep()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Discount banner - light beige, dark blue serif bold; desktop centered, mobile unchanged */}
-      <footer className="w-full py-4 px-4 md:px-8 bg-[var(--color-surface-cream)] border-t border-[var(--color-border)]">
-        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3 md:justify-center md:text-center">
-          <p className="text-[var(--color-primary)] font-serif font-bold text-base max-md:text-left max-md:flex-1 max-md:min-w-0">
-            Get 20% off your ESA consultation
-            <br className="max-md:block md:hidden" />
-            by booking in the next
-          </p>
-          <div className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-[var(--color-primary)] text-white shrink-0">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-            <span className="font-serif font-bold tabular-nums text-base">
-              {String(countdown.minutes).padStart(2, "0")}:{String(countdown.seconds).padStart(2, "0")}
-            </span>
+        {showProgress && (
+          <div className="w-full max-w-md" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={TOTAL_REGISTER_STEPS}>
+            <div className="w-full h-2 rounded-full bg-[#E0E0E0] overflow-hidden">
+              <div
+                className="h-full rounded-full bg-[var(--color-primary)] transition-all duration-300 ease-out"
+                style={{ width: `${(step / TOTAL_REGISTER_STEPS) * 100}%` }}
+              />
+            </div>
           </div>
-        </div>
-      </footer>
-    </div>
+        )}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="flex flex-col items-center gap-5 w-full"
+          >
+            {renderStep()}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </FormPageLayout>
   );
 }

@@ -62,7 +62,7 @@ export function Hero() {
               boxShadow: "var(--shadow-primary)",
             }}
           >
-            <span className="w-[87px] h-[21px] text-[var(--color-on-primary)] font-serif font-bold text-[12px] leading-tight text-center max-md:w-auto max-md:h-auto">
+            <span className="text-[var(--color-on-primary)] font-serif font-bold text-[12px] md:text-[16px] leading-tight text-center">
               Get Started
             </span>
           </Link>

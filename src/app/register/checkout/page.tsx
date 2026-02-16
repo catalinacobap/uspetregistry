@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
@@ -41,7 +41,7 @@ type Registration = {
   phone: string;
 };
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const searchParams = useSearchParams();
   const registrationId = searchParams.get("registration_id");
 
@@ -386,5 +386,22 @@ export default function CheckoutPage() {
         </section>
       </main>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f5f5f5]">
+          <CheckoutHeader />
+          <main className="w-full max-w-6xl mx-auto px-4 py-8 md:px-8 md:py-12 lg:px-12 flex items-center justify-center min-h-[50vh]">
+            <p className="text-[var(--color-body-dark)] font-sans">Loading checkout...</p>
+          </main>
+        </div>
+      }
+    >
+      <CheckoutContent />
+    </Suspense>
   );
 }
