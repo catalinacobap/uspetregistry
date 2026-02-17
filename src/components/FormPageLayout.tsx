@@ -22,9 +22,9 @@ export function FormPageLayout({
 }: FormPageLayoutProps) {
   return (
     <div className="relative min-h-screen flex flex-col min-h-[100dvh]">
-      {/* Background: mobile slightly enlarged to cover gap (115%), no stretch; desktop unchanged; gradient on top */}
+      {/* Background: extends with content; on mobile anchored to bottom so when content is long the image covers the gap below */}
       <div
-        className="absolute inset-0 bg-no-repeat -z-10 bg-[center_85%] md:bg-[50%_50%] max-md:bg-[length:125%_auto] md:bg-[length:100%_auto]"
+        className="absolute inset-0 min-h-full bg-no-repeat -z-10 md:bg-[50%_50%] max-md:bg-[length:125%_auto] max-md:bg-[center_bottom] md:bg-[length:100%_auto] transition-[background-position,background-size] duration-500 ease-in-out"
         style={{
           backgroundImage: "url('/images/other/bg.PNG')",
           backgroundColor: "var(--color-surface-cream)",
@@ -32,7 +32,7 @@ export function FormPageLayout({
         aria-hidden
       >
         <div
-          className="absolute top-0 left-0 right-0 max-md:h-1/2 md:h-1/2 bg-[linear-gradient(to_bottom,#F7F9FA_50%,#F7F9FA_15%,transparent_100%)] pointer-events-none"
+          className="absolute top-0 left-0 right-0 max-md:h-1/2 md:h-1/2 bg-[linear-gradient(to_bottom,#F7F9FA_50%,#F7F9FA_15%,transparent_100%)] pointer-events-none transition-all duration-500 ease-in-out"
           aria-hidden
         />
       </div>
@@ -76,9 +76,9 @@ export function FormPageLayout({
       {topSlot}
 
       <div
-        className={`flex-1 flex flex-col items-center justify-start px-4 relative overflow-hidden font-serif text-base ${
+        className={`flex-1 flex flex-col items-center justify-start px-4 relative overflow-x-hidden overflow-y-visible font-serif text-base min-h-0 ${
           contentPadding === "tight"
-            ? "pt-10 pb-8 md:pt-12 md:pb-12"
+            ? "pt-6 pb-6 md:pt-12 md:pb-12"
             : "py-8 md:py-12"
         }`}
       >
@@ -91,7 +91,7 @@ export function FormPageLayout({
           <p className="text-[var(--color-primary)] font-serif font-bold text-[14px] md:text-[16px] max-md:text-left max-md:flex-1 max-md:min-w-0">
             Get 20% off your ESA consultation
             <br className="max-md:block md:hidden" />
-            by booking in the next
+            {" "}by booking in the next
           </p>
           <div className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-[var(--color-primary)] text-white shrink-0">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">

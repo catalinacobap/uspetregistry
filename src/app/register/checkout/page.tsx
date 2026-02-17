@@ -15,19 +15,19 @@ const stripePromise = loadStripe(
 
 const CHECKOUT_TESTIMONIALS = [
   {
-    icon: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/be736bc1-4add-4b8f-86e9-f1f1bc205ca6",
+    icon: "/robert.png",
     reviewText:
       '"My landlord accepted my emotional support dog without any issues. The process was straightforward and the letter looked professional."',
     author: "- Michael R.",
   },
   {
-    icon: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/aa2268d8-27b0-43d7-86ac-261bf25462b5",
+    icon: "/emily.png",
     reviewText:
       '"The mental health professional was thorough and caring. Having my ESA has made a real difference in my daily life."',
     author: "- Jennifer L.",
   },
   {
-    icon: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/de2dd503-978f-48ca-ac98-41430320d13b",
+    icon: "/david.png",
     reviewText:
       '"Fast, professional, and completely legal. I\'ve saved hundreds on pet deposits and my anxiety has improved dramatically with my ESA by my side."',
     author: "- David K.",

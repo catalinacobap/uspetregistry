@@ -3,34 +3,11 @@
 import Marquee from "react-fast-marquee";
 import { TrustItem } from "./TrustItem";
 
-const MARQUEE_IMAGES = {
-  license: "/images/marquee/esa.png",
-  protection: "/images/marquee/protection.png",
-  delivery: "/images/marquee/delivery.png",
-  guarantee: "/images/marquee/money.png",
-};
-
 const TRUST_ITEMS = [
-  {
-    icon: MARQUEE_IMAGES.license,
-    iconAlt: "Licensed in all 50 states",
-    text: "Licensed in all 50 states",
-  },
-  {
-    icon: MARQUEE_IMAGES.protection,
-    iconAlt: "Fair Housing Act protected",
-    text: "Fair Housing Act protected",
-  },
-  {
-    icon: MARQUEE_IMAGES.delivery,
-    iconAlt: "Same-day delivery available",
-    text: "Same-day delivery available",
-  },
-  {
-    icon: MARQUEE_IMAGES.guarantee,
-    iconAlt: "100% money-back guarantee",
-    text: "100% money-back guarantee",
-  },
+  { icon: "/bbbLogo.png", iconAlt: "BBB Accredited Business A+ Rating", text: "BBB A+ Rating" },
+  { icon: "/consumerAffairsLogo.png", iconAlt: "ConsumerAffairs 4.7 stars", text: "ConsumerAffairs 4.7" },
+  { icon: "/hipaLogo.png", iconAlt: "HIPAA Compliant", text: "HIPAA Compliant" },
+  { icon: "/trustPilot.png", iconAlt: "TrustPilot", text: "TrustPilot" },
 ];
 
 export function TrustMarquee() {

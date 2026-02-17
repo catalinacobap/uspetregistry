@@ -6,22 +6,22 @@ import { ReviewCard } from "./ReviewCard";
 
 const REVIEWS_DATA = [
   {
-    icon: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/be736bc1-4add-4b8f-86e9-f1f1bc205ca6",
+    icon: "/david.png",
     reviewText: "\"Fast, professional, and completely legal. I've saved hundreds on pet deposits and my anxiety has improved dramatically with my ESA by my side.\"",
     author: "- David K."
   },
   {
-    icon: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/aa2268d8-27b0-43d7-86ac-261bf25462b5",
+    icon: "/sarah.png",
     reviewText: "\"After moving to a new apartment, my ESA became essential. This service made the process stress-free.\"",
     author: "- Sarah M."
   },
   {
-    icon: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/de2dd503-978f-48ca-ac98-41430320d13b",
+    icon: "/emily.png",
     reviewText: "\"The entire process was seamless. My therapist was understanding and the documentation arrived quickly.\"",
     author: "- Emily P."
   },
   {
-    icon: "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/f03e2073-3192-413a-9bfd-b9c04deccb8c",
+    icon: "/robert.png",
     reviewText: "\"Finally found a legitimate service that actually cares about mental health and not just making money.\"",
     author: "- Robert T."
   }

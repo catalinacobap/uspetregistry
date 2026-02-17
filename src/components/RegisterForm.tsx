@@ -143,9 +143,11 @@ export function RegisterForm() {
             ))}
           </div>
           {isTravelStep && (
-            <p className="mt-4 font-serif text-sm text-[var(--color-muted)] text-center">
-              Your dog may qualify as a Psychiatric Service Dog under ACAA regulations for flights (See PSD add on during checkout)
-            </p>
+            <div className="w-full mt-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-cream)] px-4 py-3" style={{ boxShadow: "var(--shadow-subtle)" }}>
+              <p className="font-serif text-sm text-[var(--color-primary)] text-center font-medium">
+                Your dog may qualify as a Psychiatric Service Dog under ACAA regulations for flights (See PSD add on during checkout)
+              </p>
+            </div>
           )}
           {isAgeStep && under18Blocked && (
             <div className="w-full mt-4 p-4 rounded-xl bg-[var(--color-discount)]/10 border border-[var(--color-discount)]/30 text-center">
@@ -232,21 +234,23 @@ export function RegisterForm() {
     if (config.type === "howItWorks") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
-            How It Works
-          </h2>
-          <div className="w-full flex flex-col gap-6 text-left">
-            <div>
-              <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">Take The Assessment</h3>
-              <p className="font-serif text-base text-[var(--color-muted)] mt-1">Answer questions about your mental health and pet needs</p>
-            </div>
-            <div>
-              <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">A Licensed & Registered Clinician Will Review</h3>
-              <p className="font-serif text-base text-[var(--color-muted)] mt-1">A licensed clinician will evaluate your case and contact you to finalize your ESA approval</p>
-            </div>
-            <div>
-              <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">Receive Your ESA Letter</h3>
-              <p className="font-serif text-base text-[var(--color-muted)] mt-1">Get your official letter delivered within 12–48 hours</p>
+          <div className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-cream)] p-5 md:p-6" style={{ boxShadow: "var(--shadow-subtle)" }}>
+            <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center mb-6">
+              How It Works
+            </h2>
+            <div className="w-full flex flex-col gap-6 text-left">
+              <div>
+                <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">Take The Assessment</h3>
+                <p className="font-serif text-base text-[var(--color-muted)] mt-1">Answer questions about your mental health and pet needs</p>
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">A Licensed & Registered Clinician Will Review</h3>
+                <p className="font-serif text-base text-[var(--color-muted)] mt-1">A licensed clinician will evaluate your case and contact you to finalize your ESA approval</p>
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">Receive Your ESA Letter</h3>
+                <p className="font-serif text-base text-[var(--color-muted)] mt-1">Get your official letter delivered within 12–48 hours</p>
+              </div>
             </div>
           </div>
           <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
@@ -259,23 +263,25 @@ export function RegisterForm() {
     if (config.type === "esaHousing") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
-            ESA Housing Coverage
-          </h2>
-          <p className="font-serif text-base text-[var(--color-muted)] text-center">
-            Your ESA letter applies to dorms, vacation homes, apartment complexes, and Airbnbs. Landlords cannot deny or charge pet fees with a valid letter. (As Per HUD Guidance FHEO-2020-01)
-          </p>
-          <div className="w-full grid grid-cols-2 gap-3">
-            {[
-              { key: "apartments", label: "Apartments" },
-              { key: "dorms", label: "Dorms" },
-              { key: "vacationHomes", label: "Vacation Homes" },
-              { key: "airBNBs", label: "Airbnbs" },
-            ].map(({ key, label }) => (
-              <div key={key} className="py-3 px-4 rounded-xl border border-[var(--color-primary)] bg-[#F7F9FA] font-serif font-medium text-[var(--color-primary)] text-center">
-                {label}
-              </div>
-            ))}
+          <div className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-cream)] p-5 md:p-6" style={{ boxShadow: "var(--shadow-subtle)" }}>
+            <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center mb-4">
+              ESA Housing Coverage
+            </h2>
+            <p className="font-serif text-base text-[var(--color-muted)] text-center mb-4">
+              Your ESA letter applies to dorms, vacation homes, apartment complexes, and Airbnbs. Landlords cannot deny or charge pet fees with a valid letter. (As Per HUD Guidance FHEO-2020-01)
+            </p>
+            <div className="w-full grid grid-cols-2 gap-3">
+              {[
+                { key: "apartments", label: "Apartments" },
+                { key: "dorms", label: "Dorms" },
+                { key: "vacationHomes", label: "Vacation Homes" },
+                { key: "airBNBs", label: "Airbnbs" },
+              ].map(({ key, label }) => (
+                <div key={key} className="py-3 px-4 rounded-xl border border-[var(--color-primary)] bg-[var(--color-white)] font-serif font-medium text-[var(--color-primary)] text-center">
+                  {label}
+                </div>
+              ))}
+            </div>
           </div>
           <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
             Continue
@@ -303,23 +309,25 @@ export function RegisterForm() {
       ];
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
-            Fair Housing Act Compliance
-          </h2>
-          <p className="font-serif text-base text-[var(--color-muted)] text-center">
-            Your ESA letter will be 100% Fair Housing Act compliant.
-          </p>
-          <div className="flex justify-center mt-2">
-            <GuardIcon />
+          <div className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-cream)] p-5 md:p-6" style={{ boxShadow: "var(--shadow-subtle)" }}>
+            <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center mb-2">
+              Fair Housing Act Compliance
+            </h2>
+            <p className="font-serif text-base text-[var(--color-muted)] text-center">
+              Your ESA letter will be 100% Fair Housing Act compliant.
+            </p>
+            <div className="flex justify-center mt-2">
+              <GuardIcon />
+            </div>
+            <ul className="w-full flex flex-col gap-3 mt-4">
+              {items.map((text, i) => (
+                <li key={i} className="flex items-start gap-2 font-serif text-base text-[var(--color-primary)]">
+                  <CheckIcon />
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="w-full flex flex-col gap-3 mt-4">
-            {items.map((text, i) => (
-              <li key={i} className="flex items-start gap-2 font-serif text-base text-[var(--color-primary)]">
-                <CheckIcon />
-                <span>{text}</span>
-              </li>
-            ))}
-          </ul>
           <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
             Continue
           </button>
@@ -336,15 +344,17 @@ export function RegisterForm() {
       );
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
-            Save Money Every Month
-          </h2>
-          <div className="flex justify-center mt-2">
-            <LockIcon />
+          <div className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-cream)] p-5 md:p-6" style={{ boxShadow: "var(--shadow-subtle)" }}>
+            <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center mb-2">
+              Save Money Every Month
+            </h2>
+            <div className="flex justify-center mt-2">
+              <LockIcon />
+            </div>
+            <p className="font-serif text-base text-[var(--color-muted)] text-center mt-4">
+              By registering as an ESA under the Fair Housing Act (42 U.S.C. § 3601 et seq.), renters are legally exempt from pet fees and deposits — saving an average of $800 annually.
+            </p>
           </div>
-          <p className="font-serif text-base text-[var(--color-muted)] text-center">
-            By registering as an ESA under the Fair Housing Act (42 U.S.C. § 3601 et seq.), renters are legally exempt from pet fees and deposits — saving an average of $800 annually.
-          </p>
           <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
             Continue
           </button>
@@ -355,12 +365,14 @@ export function RegisterForm() {
     if (config.type === "mentalHealthIntro") {
       return (
         <>
-          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
-            {config.title}
-          </h2>
-          <p className="font-serif text-base text-[var(--color-muted)] text-center">
-            This helps determine your eligibility. All responses are confidential, protected under our privacy policy, and will only be used to match you with a licensed and registered professional in your state.
-          </p>
+          <div className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-cream)] p-5 md:p-6" style={{ boxShadow: "var(--shadow-subtle)" }}>
+            <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center mb-4">
+              {config.title}
+            </h2>
+            <p className="font-serif text-base text-[var(--color-muted)] text-center">
+              This helps determine your eligibility. All responses are confidential, protected under our privacy policy, and will only be used to match you with a licensed and registered professional in your state.
+            </p>
+          </div>
           <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
             Continue
           </button>
@@ -394,9 +406,9 @@ export function RegisterForm() {
                 <Link href="/privacy" className="underline">Privacy Policy</Link>
               </span>
             </label>
-            <div className="flex flex-wrap gap-2 justify-center py-2">
-              <span className="px-3 py-1 rounded bg-[var(--color-success-bg)] text-[var(--color-success)] text-xs font-medium">HIPAA compliance</span>
-              <span className="px-3 py-1 rounded bg-[var(--color-success-bg)] text-[var(--color-success)] text-xs font-medium">HUD</span>
+            <div className="flex flex-wrap gap-4 justify-center items-center py-2">
+              <img src="/hipaa-compliant.jpg" alt="HIPAA Compliant" className="h-12 w-auto object-contain" />
+              <img src="/images/marquee/protection.png" alt="HUD Fair Housing Act protected" className="h-12 w-auto object-contain" />
             </div>
             <button
               type="button"
@@ -671,7 +683,11 @@ export function RegisterForm() {
       countdown={countdown}
     >
       {/* Un mismo frame: Full refund, progress bar, pregunta y opciones */}
-      <div className="relative  mt-4 z-10 w-full max-w-lg mx-auto p-4 md:p-6 flex flex-col items-center gap-4 md:gap-5">
+      <motion.div
+        layout
+        transition={{ layout: { duration: 0.4, ease: [0.32, 0.72, 0, 1] } }}
+        className="relative mt-2 md:mt-4 z-10 w-full max-w-lg mx-auto p-4 md:p-6 flex flex-col items-center gap-3 md:gap-5"
+      >
         <div className="inline-flex flex-wrap mb-2 items-center gap-x-1 px-4 py-2 rounded-full bg-[#67B847] text-white font-serif text-base">
           <span className="font-bold">Full refund</span>
           <span className="font-normal">if your letter is not approved</span>
@@ -688,17 +704,21 @@ export function RegisterForm() {
         )}
         <AnimatePresence mode="wait">
           <motion.div
+            layout
             key={step}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
+            transition={{
+              duration: 0.3,
+              layout: { duration: 0.4, ease: [0.32, 0.72, 0, 1] },
+            }}
             className="flex flex-col items-center gap-5 w-full"
           >
             {renderStep()}
           </motion.div>
         </AnimatePresence>
-      </div>
+      </motion.div>
     </FormPageLayout>
   );
 }
