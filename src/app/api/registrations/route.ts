@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase-server";
+import { sendMakeWebhook1Emails, sendMakeWebhook2Lead } from "@/lib/make-webhooks";
 
 export type RegistrationPayload = {
   answers: Record<number, string | string[]>;
@@ -37,6 +38,12 @@ export async function POST(req: NextRequest) {
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
+
+    const emailTrim = email.trim();
+    const nameTrim = (fullName ?? "").trim();
+    const phoneTrim = (phone ?? "").trim();
+    void sendMakeWebhook1Emails(emailTrim);
+    void sendMakeWebhook2Lead(emailTrim, phoneTrim, nameTrim);
 
     return NextResponse.json({ id: data.id });
   } catch (err) {
