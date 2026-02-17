@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import type { Metadata } from "next";
@@ -51,6 +52,15 @@ export default function TermsPage() {
       <Header />
       <main className="w-full min-h-screen bg-[var(--color-surface-cream)]">
         <article className="w-full max-w-3xl mx-auto px-4 md:px-8 py-12 md:py-16">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-[var(--color-primary)] font-sans font-normal text-base mb-6 underline hover:no-underline transition-all duration-200"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden>
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back
+          </Link>
           <h1 className="text-[var(--color-primary)] font-serif font-bold text-3xl md:text-4xl mb-2">
             Terms of Service
           </h1>

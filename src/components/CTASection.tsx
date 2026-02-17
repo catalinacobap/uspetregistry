@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export function CTASection() {
   return (
     <section
-      className="relative w-full py-20 px-[85px] overflow-hidden max-md:py-10 max-md:px-4"
+      className="relative w-full py-20 px-[85px] overflow-hidden max-md:py-10 max-md:px-4 max-md:min-h-[496px] max-md:flex max-md:flex-col max-md:justify-center"
     >
       {/* Desktop background */}
       <div
@@ -14,18 +14,18 @@ export function CTASection() {
         style={{ backgroundImage: "url(/images/cta.png)" }}
         aria-hidden
       />
-      {/* Mobile background: cta_mobile.JPG (clouds, paws, stars at bottom) */}
+      {/* Mobile background: contained, anchored at bottom */}
       <div
-        className="absolute inset-0 bg-no-repeat bg-cover bg-bottom -z-10 md:hidden"
+        className="absolute inset-0 bg-no-repeat bg-contain bg-bottom -z-10 md:hidden"
         style={{ backgroundImage: "url(/images/cta_mobile.JPG)" }}
         aria-hidden
       />
-      {/* Gradient overlay: white to transparent top→bottom (same as Hero) */}
+      {/* Gradient overlay: top to bottom with #FEFBF9 */}
       <div
-        className="pointer-events-none absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#FFFFFF] to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#FEFBF9] to-transparent -z-[5]"
         aria-hidden
       />
-      <div className="relative z-10 flex items-center justify-between max-w-7xl mx-auto max-md:justify-center">
+      <div className="relative z-10 flex items-center justify-between max-w-7xl mx-auto max-md:justify-center max-md:flex-1 max-md:flex-col max-md:justify-center max-md:min-h-0">
         {/* Content */}
         <div className="flex flex-col gap-8 max-w-[600px] max-md:max-w-full max-md:gap-6 max-md:items-center max-md:text-center">
           {/* Heading */}
@@ -70,9 +70,9 @@ export function CTASection() {
             </Link>
           </motion.div>
           
-          {/* Note - all blue, bold, condensed spacing, center-aligned to match design */}
+          {/* Note - all blue, bold; mobile centered, desktop left-aligned; no letter-spacing */}
           <motion.p 
-            className="text-[var(--color-primary)] font-inter font-bold text-base leading-snug tracking-tight max-w-[500px] mt-8 max-md:max-w-full max-md:mt-6 max-md:mb-40 max-md:text-sm max-md:px-2 text-left"
+            className="text-[var(--color-primary)] font-inter font-bold text-base leading-snug max-w-[500px] mt-8 max-md:max-w-full max-md:mt-6 max-md:mb-24 max-md:text-sm max-md:px-2 max-md:text-center md:text-left"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
