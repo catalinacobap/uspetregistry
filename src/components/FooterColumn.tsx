@@ -2,10 +2,20 @@
 
 import { motion } from "framer-motion";
 
+export type FooterLink = string | { text: string; href: string };
+
 interface FooterColumnProps {
   title: string;
-  links: string[];
+  links: FooterLink[];
   delay?: number;
+}
+
+function getLinkText(link: FooterLink): string {
+  return typeof link === "string" ? link : link.text;
+}
+
+function getLinkHref(link: FooterLink): string {
+  return typeof link === "string" ? "#" : link.href;
 }
 
 export function FooterColumn({ title, links, delay = 0 }: FooterColumnProps) {
@@ -26,10 +36,10 @@ export function FooterColumn({ title, links, delay = 0 }: FooterColumnProps) {
         {links.map((link, index) => (
           <a
             key={index}
-            href="#"
+            href={getLinkHref(link)}
             className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] hover:underline transition-all duration-200 max-md:text-sm capitalize"
           >
-            {link}
+            {getLinkText(link)}
           </a>
         ))}
       </div>

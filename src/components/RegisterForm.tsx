@@ -124,6 +124,7 @@ export function RegisterForm() {
 
     if (config.type === "single") {
       const isAgeStep = step === STEP_AGE_18;
+      const isTravelStep = config.question === "Do you plan to travel with your pet?";
       return (
         <>
           <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
@@ -141,6 +142,11 @@ export function RegisterForm() {
               </button>
             ))}
           </div>
+          {isTravelStep && (
+            <p className="mt-4 font-serif text-sm text-[var(--color-muted)] text-center">
+              Your dog may qualify as a Psychiatric Service Dog under ACAA regulations for flights (See PSD add on during checkout)
+            </p>
+          )}
           {isAgeStep && under18Blocked && (
             <div className="w-full mt-4 p-4 rounded-xl bg-[var(--color-discount)]/10 border border-[var(--color-discount)]/30 text-center">
               <p className="font-serif text-base text-[var(--color-primary)] font-medium">
@@ -223,6 +229,145 @@ export function RegisterForm() {
       );
     }
 
+    if (config.type === "howItWorks") {
+      return (
+        <>
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
+            How It Works
+          </h2>
+          <div className="w-full flex flex-col gap-6 text-left">
+            <div>
+              <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">Take The Assessment</h3>
+              <p className="font-serif text-base text-[var(--color-muted)] mt-1">Answer questions about your mental health and pet needs</p>
+            </div>
+            <div>
+              <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">A Licensed & Registered Clinician Will Review</h3>
+              <p className="font-serif text-base text-[var(--color-muted)] mt-1">A licensed clinician will evaluate your case and contact you to finalize your ESA approval</p>
+            </div>
+            <div>
+              <h3 className="font-serif font-bold text-lg text-[var(--color-primary)]">Receive Your ESA Letter</h3>
+              <p className="font-serif text-base text-[var(--color-muted)] mt-1">Get your official letter delivered within 12–48 hours</p>
+            </div>
+          </div>
+          <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
+            Continue
+          </button>
+        </>
+      );
+    }
+
+    if (config.type === "esaHousing") {
+      return (
+        <>
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
+            ESA Housing Coverage
+          </h2>
+          <p className="font-serif text-base text-[var(--color-muted)] text-center">
+            Your ESA letter applies to dorms, vacation homes, apartment complexes, and Airbnbs. Landlords cannot deny or charge pet fees with a valid letter. (As Per HUD Guidance FHEO-2020-01)
+          </p>
+          <div className="w-full grid grid-cols-2 gap-3">
+            {[
+              { key: "apartments", label: "Apartments" },
+              { key: "dorms", label: "Dorms" },
+              { key: "vacationHomes", label: "Vacation Homes" },
+              { key: "airBNBs", label: "Airbnbs" },
+            ].map(({ key, label }) => (
+              <div key={key} className="py-3 px-4 rounded-xl border border-[var(--color-primary)] bg-[#F7F9FA] font-serif font-medium text-[var(--color-primary)] text-center">
+                {label}
+              </div>
+            ))}
+          </div>
+          <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
+            Continue
+          </button>
+        </>
+      );
+    }
+
+    if (config.type === "fairHousing") {
+      const CheckIcon = () => (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-[var(--color-success)]">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+      );
+      const GuardIcon = () => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-primary)]">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      );
+      const items = [
+        "Licensed and Registered therapist signature and credentials",
+        "Patient diagnosis and treatment recommendation",
+        "Official US Pet Registry Documentation and Registration",
+        "Verification contact information included",
+      ];
+      return (
+        <>
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
+            Fair Housing Act Compliance
+          </h2>
+          <p className="font-serif text-base text-[var(--color-muted)] text-center">
+            Your ESA letter will be 100% Fair Housing Act compliant.
+          </p>
+          <div className="flex justify-center mt-2">
+            <GuardIcon />
+          </div>
+          <ul className="w-full flex flex-col gap-3 mt-4">
+            {items.map((text, i) => (
+              <li key={i} className="flex items-start gap-2 font-serif text-base text-[var(--color-primary)]">
+                <CheckIcon />
+                <span>{text}</span>
+              </li>
+            ))}
+          </ul>
+          <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
+            Continue
+          </button>
+        </>
+      );
+    }
+
+    if (config.type === "saveMoney") {
+      const LockIcon = () => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-primary)]">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+      );
+      return (
+        <>
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
+            Save Money Every Month
+          </h2>
+          <div className="flex justify-center mt-2">
+            <LockIcon />
+          </div>
+          <p className="font-serif text-base text-[var(--color-muted)] text-center">
+            By registering as an ESA under the Fair Housing Act (42 U.S.C. § 3601 et seq.), renters are legally exempt from pet fees and deposits — saving an average of $800 annually.
+          </p>
+          <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
+            Continue
+          </button>
+        </>
+      );
+    }
+
+    if (config.type === "mentalHealthIntro") {
+      return (
+        <>
+          <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
+            {config.title}
+          </h2>
+          <p className="font-serif text-base text-[var(--color-muted)] text-center">
+            This helps determine your eligibility. All responses are confidential, protected under our privacy policy, and will only be used to match you with a licensed and registered professional in your state.
+          </p>
+          <button type="button" onClick={goNext} className={optionButtonBase + optionSelected + " w-full mt-4"}>
+            Continue
+          </button>
+        </>
+      );
+    }
+
     if (config.type === "email") {
       return (
         <>
@@ -283,6 +428,11 @@ export function RegisterForm() {
     }
 
     if (config.type === "therapist") {
+      const therapistImages = [
+        { src: "/therapist-1.webp", alt: "Licensed clinician" },
+        { src: "/therapist-2.jpeg", alt: "Licensed clinician" },
+        { src: "/therapist-3.webp", alt: "Licensed clinician" },
+      ];
       return (
         <div className="flex flex-col items-center gap-6">
           <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] text-center">
@@ -296,11 +446,14 @@ export function RegisterForm() {
               transition={{ duration: 2, ease: "easeOut" }}
             />
           </div>
-          <div className="flex gap-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="w-14 h-14 rounded-full bg-[var(--color-border)] flex items-center justify-center text-[var(--color-muted)] font-serif text-base">
-                ?
-              </div>
+          <div className="flex gap-3 justify-center flex-wrap">
+            {therapistImages.map(({ src, alt }, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={alt}
+                className="w-12 h-12 rounded-full object-cover border-2 border-[var(--color-primary)] shrink-0"
+              />
             ))}
           </div>
         </div>
@@ -309,18 +462,15 @@ export function RegisterForm() {
 
     if (config.type === "finalizing") {
       return (
-        <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center gap-6">
-          {/* Envelope + document icon */}
+        <div className="flex flex-col items-center gap-6">
+          {/* Letter / envelope icon */}
           <div className="flex justify-center">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-primary)]">
-              <rect x="2" y="4" width="20" height="16" rx="2" />
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-primary)]">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
               <path d="m22 6-10 7L2 6" />
-              <path d="M12 13v5" />
-              <path d="m9 16 3 2 3-2" />
             </svg>
           </div>
-          {/* Progress bar */}
-          <div className="w-full h-2 bg-[var(--color-border)] rounded-full overflow-hidden">
+          <div className="w-full max-w-xs h-2 bg-[var(--color-border)] rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-[var(--color-primary)] rounded-full"
               initial={{ width: "0%" }}
@@ -331,7 +481,6 @@ export function RegisterForm() {
           <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] text-center">
             {config.title}
           </h2>
-          {/* Milestone icons: document/pen, therapist, checkmark */}
           <div className="flex justify-center gap-6">
             <span className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center text-white" aria-hidden>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M16 13H8" /><path d="M16 17H8" /><path d="M10 9H8" /></svg>

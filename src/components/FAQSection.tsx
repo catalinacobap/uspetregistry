@@ -40,7 +40,7 @@ const FAQ_DATA = [
 
 export function FAQSection() {
   return (
-    <section className="w-full py-[85px] px-[85px] bg-white max-md:py-10 max-md:px-4">
+    <section id="faq" className="w-full py-[85px] px-[85px] bg-white max-md:py-10 max-md:px-4">
       <div className="flex flex-col justify-center items-center gap-14 max-w-7xl mx-auto max-md:gap-8">
         {/* FAQ Title */}
         <motion.h2 

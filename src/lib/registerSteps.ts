@@ -21,6 +21,11 @@ type PrequalStep = { type: "prequal"; title: string };
 type PackageStep = { type: "package"; title?: string };
 type SpeedStep = { type: "speed"; question: string };
 type CheckoutStep = { type: "checkout"; title: string };
+type HowItWorksStep = { type: "howItWorks" };
+type EsaHousingStep = { type: "esaHousing" };
+type FairHousingStep = { type: "fairHousing" };
+type SaveMoneyStep = { type: "saveMoney" };
+type MentalHealthIntroStep = { type: "mentalHealthIntro"; title: string };
 
 export type StepConfig =
   | SingleStep
@@ -33,7 +38,12 @@ export type StepConfig =
   | PrequalStep
   | PackageStep
   | SpeedStep
-  | CheckoutStep;
+  | CheckoutStep
+  | HowItWorksStep
+  | EsaHousingStep
+  | FairHousingStep
+  | SaveMoneyStep
+  | MentalHealthIntroStep;
 
 export const REGISTER_STEPS: StepConfig[] = [
   // 1️⃣ Pet Qualification
@@ -61,6 +71,7 @@ export const REGISTER_STEPS: StepConfig[] = [
       { value: "no", label: "No" },
     ],
   },
+  { type: "howItWorks" },
   {
     type: "single",
     question: "Why do you need an ESA letter today?",
@@ -70,6 +81,8 @@ export const REGISTER_STEPS: StepConfig[] = [
       { value: "unsure", label: "I'm not sure" },
     ],
   },
+  { type: "esaHousing" },
+  { type: "fairHousing" },
   {
     type: "single",
     question: "How many pets do you have?",
@@ -102,7 +115,9 @@ export const REGISTER_STEPS: StepConfig[] = [
       { value: "no", label: "No" },
     ],
   },
+  { type: "saveMoney" },
   // 2️⃣ Mental Health Questionnaire
+  { type: "mentalHealthIntro", title: "Mental Health Questionnaire" },
   {
     type: "multi",
     question: "Which issues have you experienced? (multi-select)",

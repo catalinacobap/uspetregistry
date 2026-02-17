@@ -1,21 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FooterColumn } from "./FooterColumn";
+import { FooterColumn, type FooterLink } from "./FooterColumn";
 
-const FOOTER_COLUMNS = [
+const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
   {
     title: "Services",
     links: ["ESA Letters", "PSD Letters", "renewal services", "housing support"]
   },
   {
-    title: "Support", 
-    links: ["FAQ's", "Contact Us", "Order Status", "refund policy"]
+    title: "Support",
+    links: [
+      { text: "FAQ's", href: "/#faq" },
+      { text: "Contact Us", href: "mailto:info@uspetregistry.org" },
+      { text: "Order Status", href: "#" },
+      { text: "refund policy", href: "/terms" },
+    ]
   },
-  {
-    title: "contact",
-    links: ["info@uspetregistry.org", "(201) 979-1703", "440 Torp Flats, Prosaccoborough, GA 27010"]
-  }
 ];
 
 export function Footer() {
@@ -62,6 +63,34 @@ export function Footer() {
                 delay={0.2 + index * 0.1}
               />
             ))}
+            {/* Contact: mailto, tel, address (no link) */}
+            <motion.div
+              className="flex flex-col gap-3 max-md:items-start max-md:text-left w-full"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5, ease: "easeOut" }}
+            >
+              <h3 className="text-[var(--color-primary)] font-serif font-bold text-xl leading-[27px] capitalize max-md:text-lg">
+                Contact
+              </h3>
+              <div className="flex flex-col gap-1.5 max-md:items-start">
+                <a
+                  href="mailto:info@uspetregistry.org"
+                  className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] hover:underline transition-all duration-200 max-md:text-sm lowercase"
+                >
+                  info@uspetregistry.org
+                </a>
+                <a
+                  href="tel:(201) 979-1703"
+                  className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] hover:underline transition-all duration-200 max-md:text-sm capitalize"
+                >
+                  (201) 979-1703
+                </a>
+                <span className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] max-md:text-sm capitalize">
+                  440 Torp Flats, Prosaccoborough, GA 27010
+                </span>
+              </div>
+            </motion.div>
           </div>
         </div>
         
@@ -79,7 +108,7 @@ export function Footer() {
           
           {/* Terms & Conditions */}
           <a
-            href="#"
+            href="/terms"
             className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] underline hover:no-underline transition-all duration-200 max-md:text-sm capitalize"
           >
             Terms & Conditions
@@ -87,7 +116,7 @@ export function Footer() {
           
           {/* Privacy Policy */}
           <a
-            href="#"
+            href="/privacy"
             className="text-[var(--color-primary)] font-sans font-normal text-base leading-[21px] underline hover:no-underline transition-all duration-200 max-md:text-sm capitalize"
           >
             privacy policy
