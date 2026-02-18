@@ -1,5 +1,5 @@
-const STEP_PACKAGE = 23;
-const STEP_SPEED = 24;
+const STEP_PACKAGE = 24;
+const STEP_SPEED = 25;
 
 export const PACKAGE_PRICES = { standard: 128, premium: 159 } as const;
 export const EXPRESS_ADDON = 50;
@@ -26,7 +26,7 @@ export function getCheckoutTotal(answers: Record<string, string | string[]> | Re
   const speed = getAnswer(answers, STEP_SPEED) ?? "standard";
 
   const packagePrice = pkg === "premium" ? PACKAGE_PRICES.premium : PACKAGE_PRICES.standard;
-  const packageLabel = pkg === "premium" ? "Premium Package" : "Official ESA Letter";
+  const packageLabel = pkg === "premium" ? "Premium ESA Letter" : "Standard ESA Letter";
   const expressAddon = speed === "express" ? EXPRESS_ADDON : 0;
 
   const subtotal = packagePrice + expressAddon;
@@ -45,4 +45,5 @@ export function getCheckoutTotal(answers: Record<string, string | string[]> | Re
   };
 }
 
-export const DEFAULT_TOTAL_CENTS = 19224;
+/** Fallback when no registration/answers: Standard ($128) + Standard processing ($0) + 8% tax */
+export const DEFAULT_TOTAL_CENTS = 13824;
