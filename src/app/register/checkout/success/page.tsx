@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
 
-export default function CheckoutSuccessPage() {
+/** Fires paid-notify webhook when registration_id is in the URL. Must be inside Suspense (useSearchParams). */
+function NotifyOnSuccess() {
   const searchParams = useSearchParams();
-
   useEffect(() => {
     const registrationId = searchParams.get("registration_id");
     if (!registrationId) return;
@@ -17,9 +17,16 @@ export default function CheckoutSuccessPage() {
       body: JSON.stringify({ registration_id: registrationId }),
     }).catch(() => {});
   }, [searchParams]);
+  return null;
+}
 
+export default function CheckoutSuccessPage() {
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex flex-col">
+    <>
+      <Suspense fallback={null}>
+        <NotifyOnSuccess />
+      </Suspense>
+      <div className="min-h-screen bg-[#f5f5f5] flex flex-col">
       <CheckoutHeader />
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
@@ -62,6 +69,7 @@ export default function CheckoutSuccessPage() {
           </div>
         </div>
       </main>
-    </div>
+      </div>
+    </>
   );
 }
