@@ -1,9 +1,23 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckoutHeader } from "@/components/checkout/CheckoutHeader";
 
 export default function CheckoutSuccessPage() {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const registrationId = searchParams.get("registration_id");
+    if (!registrationId) return;
+    fetch("/api/register-paid-notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ registration_id: registrationId }),
+    }).catch(() => {});
+  }, [searchParams]);
+
   return (
     <div className="min-h-screen bg-[#f5f5f5] flex flex-col">
       <CheckoutHeader />

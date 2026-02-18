@@ -113,7 +113,10 @@ function PaymentForm({
         setLoading(false);
         return;
       }
-      window.location.href = `${window.location.origin}/register/checkout/success`;
+      const successUrl = registrationId
+        ? `${window.location.origin}/register/checkout/success?registration_id=${encodeURIComponent(registrationId)}`
+        : `${window.location.origin}/register/checkout/success`;
+      window.location.href = successUrl;
     } catch {
       alert("Something went wrong");
       setLoading(false);

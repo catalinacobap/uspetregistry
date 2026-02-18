@@ -82,6 +82,30 @@ export function RegisterForm() {
     if (step < TOTAL_REGISTER_STEPS) setStep((s) => s + 1);
   };
 
+  const handleEmailStepNext = () => {
+    if (!email.trim()) return;
+    fetch("/api/register-email-webhook", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email.trim() }),
+    }).catch(() => {});
+    goNext();
+  };
+
+  const handlePrequalStepNext = () => {
+    if (!fullName.trim() || !phone.trim()) return;
+    fetch("/api/register-prequal-webhook", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email.trim(),
+        phone: phone.trim(),
+        name: fullName.trim(),
+      }),
+    }).catch(() => {});
+    goNext();
+  };
+
   const handleProceedToCheckout = async () => {
     setCheckoutSaving(true);
     try {
@@ -412,7 +436,7 @@ export function RegisterForm() {
             </div>
             <button
               type="button"
-              onClick={goNext}
+              onClick={handleEmailStepNext}
               disabled={!email.trim() || !termsAccepted}
               className={optionButtonBase + optionSelected + " disabled:opacity-50 disabled:cursor-not-allowed"}
             >
@@ -552,7 +576,7 @@ export function RegisterForm() {
             />
             <button
               type="button"
-              onClick={goNext}
+              onClick={handlePrequalStepNext}
               disabled={!fullName.trim() || !phone.trim()}
               className={optionButtonBase + optionSelected + " disabled:opacity-50 disabled:cursor-not-allowed"}
             >
