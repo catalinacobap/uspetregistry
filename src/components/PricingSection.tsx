@@ -50,29 +50,29 @@ const PRICING_FEATURES = [
 
 export function PricingSection() {
   return (
-    <section id="pricing" className="relative w-full py-[70px] px-[85px] bg-[var(--color-surface-cream)] overflow-hidden max-md:py-10 max-md:px-4">
+    <section id="pricing" className="relative w-full py-[70px] px-[85px] bg-[var(--color-surface-cream)] overflow-hidden max-md:py-10 max-md:px-4 md:py-14 md:px-6 lg:py-[70px] lg:px-[85px]">
       {/* Background Decorative Images - hidden on mobile to reduce clutter */}
       <img
         src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/55628dad-07fe-4a41-9c22-86c944ee1026"
         alt="Decorative illustration"
-        className="absolute left-20 top-[800px] w-[443px] h-[310px] z-0 max-md:hidden"
+        className="absolute left-20 top-[800px] w-[443px] h-[310px] z-0 hidden lg:block"
       />
       <img
         src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/fd44dd78-c609-47ed-b113-c192270c62aa"
         alt="Decorative illustration"
-        className="absolute right-22 top-[600px] w-[431px] h-[302px] z-0 max-md:hidden"
+        className="absolute right-22 top-[600px] w-[431px] h-[302px] z-0 hidden lg:block"
       />
       <img
         src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/f6790bb1-a02b-41c6-83f3-eb051d3360ea"
         alt="Decorative illustration"
-        className="absolute right-[-120px] bottom-[-40px] w-[436px] h-[322px] z-0 max-md:hidden"
+        className="absolute right-[-120px] bottom-[-40px] w-[436px] h-[322px] z-0 hidden lg:block"
       />
 
       <div className="relative z-10 flex flex-col items-center gap-14 max-w-7xl mx-auto max-md:gap-8">
         {/* Pricing Header */}
         <div className="flex flex-col items-center gap-14 w-full max-md:gap-6">
           <motion.h2 
-            className="w-full text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center max-md:text-[32px] max-md:leading-tight max-md:px-2"
+            className="w-full text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center max-md:text-[32px] max-md:leading-tight max-md:px-2 md:text-[40px] md:leading-tight lg:text-[48px] lg:leading-[62px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}

@@ -27,13 +27,13 @@ const INFO_CARDS = [
 
 export function InfoSection() {
   return (
-    <section className="w-full py-[70px] px-[85px] bg-white max-md:py-10 max-md:px-4">
-      <div className="flex flex-col items-center gap-14 max-w-7xl mx-auto max-md:gap-8">
+    <section className="w-full py-[70px] px-[85px] bg-white max-md:py-10 max-md:px-4 md:py-14 md:px-6 lg:py-[70px] lg:px-[85px]">
+      <div className="flex flex-col items-center gap-14 max-w-7xl mx-auto max-md:gap-8 md:gap-10">
         {/* Info Container */}
         <div className="flex flex-col gap-14 w-full max-md:gap-8">
           {/* Info Title */}
           <motion.h2 
-            className="w-full text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center max-md:text-[32px] max-md:leading-tight max-md:px-2"
+            className="w-full text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center max-md:text-[32px] max-md:leading-tight max-md:px-2 md:text-[40px] md:leading-tight lg:text-[48px] lg:leading-[62px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -43,7 +43,7 @@ export function InfoSection() {
           
           {/* Info Description */}
           <motion.p 
-            className="w-full text-[var(--color-muted)] font-sans font-normal text-[22px] leading-[26px] text-center max-md:text-base max-md:leading-6 max-md:px-2"
+            className="w-full text-[var(--color-muted)] font-sans font-normal text-[22px] leading-[26px] text-center max-md:text-base max-md:leading-6 max-md:px-2 md:text-lg md:leading-6 lg:text-[22px] lg:leading-[26px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
@@ -65,7 +65,7 @@ export function InfoSection() {
           />
           
           {/* Two Side-by-Side Cards */}
-          <div className="flex gap-4 max-md:flex-col max-md:gap-6">
+          <div className="flex gap-4 max-md:flex-col max-md:gap-6 md:gap-4 lg:gap-4">
             <InfoCard
               image={INFO_CARDS[1].image}
               imageAlt={INFO_CARDS[1].imageAlt}

@@ -23,12 +23,12 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative w-full py-[59px] px-[85px] overflow-hidden bg-no-repeat bg-bottom bg-cover max-md:py-10 max-md:px-4"
+      className="relative w-full py-[59px] px-[85px] overflow-hidden bg-no-repeat bg-bottom bg-cover max-md:py-10 max-md:px-4 md:py-12 md:px-6 lg:py-[59px] lg:px-[85px]"
       style={{ backgroundImage: 'url(/images/footer.png)' }}
     >
-      <div className="relative z-10 flex flex-col justify-center items-center gap-[203px] max-w-7xl mx-auto max-md:gap-10 max-md:items-start">
+      <div className="relative z-10 flex flex-col justify-center items-center gap-[203px] max-w-7xl mx-auto max-md:gap-10 max-md:items-start md:gap-14 lg:gap-[203px]">
         {/* Footer Content Row */}
-        <div className="flex justify-between items-center w-full gap-[267px] max-md:flex-col max-md:gap-8 max-md:items-start max-md:text-left">
+        <div className="flex justify-between items-center w-full gap-[267px] max-md:flex-col max-md:gap-8 max-md:items-start max-md:text-left md:gap-10 md:flex-wrap lg:gap-[267px]">
           {/* Logo and Description */}
           <motion.div
             className="flex items-center gap-3 max-md:flex-col max-md:items-start"

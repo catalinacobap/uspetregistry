@@ -29,11 +29,11 @@ const REVIEWS_DATA = [
 
 export function ReviewsSection() {
   return (
-    <section className="w-full py-[60px] px-[85px] bg-white max-md:py-10 max-md:px-4">
+    <section className="w-full py-[60px] px-[85px] bg-white max-md:py-10 max-md:px-4 md:py-14 md:px-6 lg:py-[60px] lg:px-[85px]">
       <div className="flex flex-col justify-center items-center gap-[42px] max-w-7xl mx-auto max-md:gap-8">
         {/* Reviews Title */}
         <motion.h2 
-          className="w-full max-w-7xl h-[62px] text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center max-md:h-auto max-md:text-[32px] max-md:leading-tight max-md:px-2"
+          className="w-full max-w-7xl h-auto text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center max-md:text-[32px] max-md:leading-tight max-md:px-2 md:text-[40px] md:leading-tight lg:text-[48px] lg:leading-[62px]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -42,7 +42,7 @@ export function ReviewsSection() {
         </motion.h2>
         
         {/* Reviews Content */}
-        <div className="flex justify-between items-stretch w-full max-w-7xl gap-4 max-md:flex-col max-md:gap-6 max-md:items-stretch">
+        <div className="flex justify-between items-stretch w-full max-w-7xl gap-4 max-md:flex-col max-md:gap-6 max-md:items-stretch md:grid md:grid-cols-2 md:gap-4 lg:flex lg:gap-4">
           {REVIEWS_DATA.map((review, index) => (
             <ReviewCard
               key={review.author}

@@ -47,14 +47,14 @@ export function Header() {
   return (
     <header className="relative w-full bg-white border-b border-[var(--color-border)]">
       <motion.div
-        className="w-full h-[72px] py-2.5 px-[84px] flex items-center gap-6 max-md:px-4 max-md:h-auto max-md:min-h-[72px] max-md:py-3 max-md:justify-between"
+        className="w-full h-[72px] py-2.5 px-[84px] flex items-center gap-6 max-md:px-4 max-md:h-auto max-md:min-h-[72px] max-md:py-3 max-md:justify-between md:px-6 lg:px-[84px]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         {/* Logo Container - left */}
         <motion.div
-          className="w-[97px] h-[42px] flex items-center justify-center max-md:w-[80px] max-md:h-9 flex-shrink-0"
+          className="w-[97px] h-[42px] flex items-center justify-center max-md:w-[80px] max-md:h-9 md:w-[90px] md:h-10 flex-shrink-0"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >

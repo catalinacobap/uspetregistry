@@ -272,14 +272,14 @@ function CheckoutContent() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-start">
                   <div>
-                    <span className="text-[var(--color-body-dark)]">{checkoutTotal.packageLabel}</span>
+                    <span className="text-[var(--color-body-dark)] font-medium">{checkoutTotal.packageLabel}</span>
                     <p className="text-[var(--color-text-tertiary)] text-xs mt-0.5">
-                      20% discount applied
+                      20% discount applied (list price ${checkoutTotal.packageListPrice})
                     </p>
                   </div>
                   <div className="text-right">
                     <span className="line-through text-[var(--color-text-tertiary)] mr-2">
-                      ${checkoutTotal.packagePrice === 159 ? "199" : "160"}
+                      ${checkoutTotal.packageListPrice}
                     </span>
                     <span className="text-[var(--color-body-dark)] font-medium">
                       ${checkoutTotal.packagePrice}

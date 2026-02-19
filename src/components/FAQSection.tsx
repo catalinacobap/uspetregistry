@@ -40,11 +40,11 @@ const FAQ_DATA = [
 
 export function FAQSection() {
   return (
-    <section id="faq" className="w-full py-[85px] px-[85px] bg-white max-md:py-10 max-md:px-4">
+    <section id="faq" className="w-full py-[85px] px-[85px] bg-white max-md:py-10 max-md:px-4 md:py-14 md:px-6 lg:py-[85px] lg:px-[85px]">
       <div className="flex flex-col justify-center items-center gap-14 max-w-7xl mx-auto max-md:gap-8">
         {/* FAQ Title */}
         <motion.h2 
-          className="w-full max-w-7xl text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center capitalize max-md:text-[32px] max-md:leading-tight max-md:px-2"
+          className="w-full max-w-7xl text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] text-center capitalize max-md:text-[32px] max-md:leading-tight max-md:px-2 md:text-[40px] md:leading-tight lg:text-[48px] lg:leading-[62px]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}

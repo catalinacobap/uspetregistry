@@ -28,7 +28,7 @@ const PROCESS_STEPS = [
 
 export function ProcessSteps() {
   return (
-    <div className="flex flex-wrap justify-center items-stretch w-full max-w-7xl gap-6 sm:gap-8 mx-auto max-md:flex-col max-md:items-center max-md:gap-6 max-md:px-4">
+    <div className="flex flex-wrap justify-center items-stretch w-full max-w-7xl gap-6 sm:gap-8 mx-auto max-md:flex-col max-md:items-center max-md:gap-6 max-md:px-4 md:gap-6 md:px-4 lg:gap-8 lg:px-0">
       {PROCESS_STEPS.map((step, index) => (
         <ProcessStep
           key={step.title}

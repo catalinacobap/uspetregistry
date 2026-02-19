@@ -1,13 +1,50 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { REGISTER_STEPS, TOTAL_REGISTER_STEPS } from "@/lib/registerSteps";
 import { FormPageLayout } from "@/components/FormPageLayout";
+import { StateSelect } from "@/components/StateSelect";
 
-const STEP_AGE_18 = 2; 
+const STEP_AGE_18 = 2;
+
+const COUNTDOWN_STORAGE_KEY = "register_discount_end_ts";
+const DEFAULT_MINUTES = 10;
+const DEFAULT_SECONDS = 15;
+const DEFAULT_MS = (DEFAULT_MINUTES * 60 + DEFAULT_SECONDS) * 1000;
+
+function getCountdownFromEndTs(endTs: number) {
+  const now = Date.now();
+  if (now >= endTs) return { minutes: 0, seconds: 0 };
+  const remaining = Math.floor((endTs - now) / 1000);
+  return {
+    minutes: Math.floor(remaining / 60),
+    seconds: remaining % 60,
+  };
+}
+
+let savedEndTs: number | null = null;
+
+function getInitialCountdown(): { minutes: number; seconds: number } {
+  if (typeof window === "undefined")
+    return { minutes: DEFAULT_MINUTES, seconds: DEFAULT_SECONDS };
+  const stored = localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+  const parsed = stored ? parseInt(stored, 10) : NaN;
+  const now = Date.now();
+  if (!Number.isNaN(parsed) && parsed > now) {
+    savedEndTs = parsed;
+    return getCountdownFromEndTs(parsed);
+  }
+  const end = now + DEFAULT_MS;
+  savedEndTs = end;
+  localStorage.setItem(COUNTDOWN_STORAGE_KEY, String(end));
+  return { minutes: DEFAULT_MINUTES, seconds: DEFAULT_SECONDS };
+}
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_MIN_DIGITS = 10;
 
 const optionButtonBase =
   "w-full py-4 px-6 rounded-[6px] font-serif font-bold text-[18px] transition-all cursor-pointer border border-[#2D345F] ";
@@ -26,17 +63,16 @@ export function RegisterForm() {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [autoRenew, setAutoRenew] = useState(false);
-  const [countdown, setCountdown] = useState({ minutes: 10, seconds: 15 });
+  const [countdown, setCountdown] = useState(() => getInitialCountdown());
+  const endTsRef = useRef<number | null>(savedEndTs);
   const [under18Blocked, setUnder18Blocked] = useState(false);
   const [checkoutSaving, setCheckoutSaving] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => {
-      setCountdown((c) => {
-        if (c.seconds > 0) return { ...c, seconds: c.seconds - 1 };
-        if (c.minutes > 0) return { minutes: c.minutes - 1, seconds: 59 };
-        return c;
-      });
+      const end = endTsRef.current;
+      if (end == null) return;
+      setCountdown(getCountdownFromEndTs(end));
     }, 1000);
     return () => clearInterval(t);
   }, []);
@@ -83,17 +119,22 @@ export function RegisterForm() {
   };
 
   const handleEmailStepNext = () => {
-    if (!email.trim()) return;
+    if (!email.trim() || !fullName.trim()) return;
+    if (/\d/.test(fullName.trim())) return;
+    if (!EMAIL_REGEX.test(email.trim())) return;
     fetch("/api/register-email-webhook", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email.trim() }),
+      body: JSON.stringify({ email: email.trim(), name: fullName.trim() }),
     }).catch(() => {});
     goNext();
   };
 
   const handlePrequalStepNext = () => {
     if (!fullName.trim() || !phone.trim()) return;
+    if (/\d/.test(fullName.trim())) return;
+    const digitsOnly = phone.replace(/\D/g, "");
+    if (digitsOnly.length < PHONE_MIN_DIGITS) return;
     fetch("/api/register-prequal-webhook", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -230,18 +271,12 @@ export function RegisterForm() {
             {config.question}
           </h2>
           <div className="w-full flex flex-col gap-3">
-            <select
+            <StateSelect
               value={val}
-              onChange={(e) => setAnswers((prev) => ({ ...prev, [step]: e.target.value }))}
-              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-            >
-              <option value="">Select state</option>
-              {config.options.map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
+              onChange={(v) => setAnswers((prev) => ({ ...prev, [step]: v }))}
+              options={config.options}
+              placeholder="Select state"
+            />
             <button
               type="button"
               onClick={goNext}
@@ -405,6 +440,9 @@ export function RegisterForm() {
     }
 
     if (config.type === "email") {
+      const nameValid = fullName.trim().length > 0 && !/\d/.test(fullName.trim());
+      const emailValid = EMAIL_REGEX.test(email.trim());
+      const canContinue = Boolean(emailValid && nameValid && termsAccepted);
       return (
         <>
           <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
@@ -412,7 +450,17 @@ export function RegisterForm() {
           </h2>
           <div className="w-full flex flex-col gap-4">
             <input
+              type="text"
+              inputMode="text"
+              autoComplete="name"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value.replace(/\d/g, ""))}
+              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
+            />
+            <input
               type="email"
+              autoComplete="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -431,13 +479,13 @@ export function RegisterForm() {
               </span>
             </label>
             <div className="flex flex-wrap gap-4 justify-center items-center py-2">
-              <img src="/hipaa-compliant.jpg" alt="HIPAA Compliant" className="h-12 w-auto object-contain" />
+              <img src="/hipaa-compliant.png" alt="HIPAA Compliant" className="h-12 w-auto object-contain" />
               <img src="/images/marquee/protection.png" alt="HUD Fair Housing Act protected" className="h-12 w-auto object-contain" />
             </div>
             <button
               type="button"
               onClick={handleEmailStepNext}
-              disabled={!email.trim() || !termsAccepted}
+              disabled={!canContinue}
               className={optionButtonBase + optionSelected + " disabled:opacity-50 disabled:cursor-not-allowed"}
             >
               Continue
@@ -554,6 +602,10 @@ export function RegisterForm() {
     }
 
     if (config.type === "prequal") {
+      const nameValid = fullName.trim().length > 0 && !/\d/.test(fullName.trim());
+      const digitsOnly = phone.replace(/\D/g, "");
+      const phoneValid = digitsOnly.length >= PHONE_MIN_DIGITS;
+      const canContinue = nameValid && phoneValid;
       return (
         <>
           <h2 className="text-[var(--color-primary)] font-serif font-bold text-[32px] md:text-[42px] leading-tight text-center">
@@ -562,22 +614,26 @@ export function RegisterForm() {
           <div className="w-full flex flex-col gap-4">
             <input
               type="text"
+              inputMode="text"
+              autoComplete="name"
               placeholder="Full Name"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={(e) => setFullName(e.target.value.replace(/\d/g, ""))}
               className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
             />
             <input
-              type="tel"
+              type="number"
+              inputMode="numeric"
+              autoComplete="tel"
               placeholder="Phone Number"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none"
+              onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+              className="w-full py-4 px-4 rounded-xl border-2 border-[var(--color-primary)] bg-white font-serif text-base text-[var(--color-primary)] placeholder:text-[var(--color-muted)] focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
             <button
               type="button"
               onClick={handlePrequalStepNext}
-              disabled={!fullName.trim() || !phone.trim()}
+              disabled={!canContinue}
               className={optionButtonBase + optionSelected + " disabled:opacity-50 disabled:cursor-not-allowed"}
             >
               Continue
@@ -614,6 +670,9 @@ export function RegisterForm() {
               className={`text-left py-4 px-6 rounded-xl border-2 transition-all cursor-pointer ${pkg === "premium" ? optionSelected : optionUnselected}`}
             >
               <span className="font-serif font-bold text-base block">Premium Package — $159</span>
+              <span className="font-serif text-sm text-[var(--color-success)] font-medium mt-0.5 block">
+                20% discount applied (list price $199)
+              </span>
               <span className="font-serif text-base opacity-90 mt-1 block">
                 Includes: Everything in Standard, Premium support
               </span>
@@ -673,9 +732,10 @@ export function RegisterForm() {
   const config = REGISTER_STEPS[step - 1];
   const showProgress = config && config.type !== "eligible" && config.type !== "therapist" && config.type !== "finalizing";
 
+  const isCheckoutStep = config?.type === "checkout";
   const backButton = (
     <>
-      {step > 1 ? (
+      {step > 1 && !isCheckoutStep ? (
         <button
           type="button"
           onClick={handleBack}

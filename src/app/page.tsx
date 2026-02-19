@@ -23,7 +23,7 @@ export default function Home() {
 
         <TrustLogoMarquee />
 
-        <section id="how-it-works" className="w-full py-[85px] px-[85px] max-md:py-10 max-md:px-4">
+        <section id="how-it-works" className="w-full py-[85px] px-[85px] max-md:py-10 max-md:px-4 md:py-14 md:px-6 lg:py-[85px] lg:px-[85px]">
           <ProcessTitle />
           <ProcessSteps />
         </section>

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export function CTASection() {
   return (
     <section
-      className="relative w-full py-20 px-[85px] overflow-hidden max-md:py-10 max-md:px-4 max-md:min-h-[496px] max-md:flex max-md:flex-col max-md:justify-center"
+      className="relative w-full py-20 px-[85px] overflow-hidden max-md:py-10 max-md:px-4 max-md:min-h-[496px] max-md:flex max-md:flex-col max-md:justify-center md:py-14 md:px-6 lg:py-20 lg:px-[85px]"
     >
       {/* Desktop background */}
       <div
@@ -30,7 +30,7 @@ export function CTASection() {
         <div className="flex flex-col gap-8 max-w-[600px] max-md:max-w-full max-md:gap-6 max-md:items-center max-md:text-center">
           {/* Heading */}
           <motion.h2 
-            className="text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] max-md:text-[32px] max-md:leading-tight max-md:px-2"
+            className="text-[var(--color-primary)] font-serif font-bold text-[48px] leading-[62px] max-md:text-[32px] max-md:leading-tight max-md:px-2 md:text-[40px] md:leading-tight lg:text-[48px] lg:leading-[62px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -40,7 +40,7 @@ export function CTASection() {
           
           {/* Description */}
           <motion.p 
-            className="text-[var(--color-muted)] font-sans font-normal text-[22px] leading-[26px] max-w-[520px] max-md:text-base max-md:leading-6 max-md:max-w-full max-md:px-2"
+            className="text-[var(--color-muted)] font-sans font-normal text-[22px] leading-[26px] max-w-[520px] max-md:text-base max-md:leading-6 max-md:max-w-full max-md:px-2 md:text-lg lg:text-[22px] lg:leading-[26px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}

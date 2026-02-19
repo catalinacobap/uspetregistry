@@ -7,7 +7,7 @@ const LOGO_STRIP_SRC =
 
 export function TrustLogoMarquee() {
   return (
-    <section className="relative w-full py-[50px] px-[374px] bg-white max-md:py-8 max-md:px-0 overflow-hidden">
+    <section className="relative w-full py-[50px] px-[374px] bg-white max-md:pt-12 max-md:pb-10 max-md:px-0 md:py-10 md:px-8 lg:py-[50px] lg:px-[374px] overflow-hidden">
       <Marquee speed={50} className="flex items-center py-2">
         <img
           src={LOGO_STRIP_SRC}
@@ -17,11 +17,11 @@ export function TrustLogoMarquee() {
       </Marquee>
       {/* White gradient on both sides: align to content edge on desktop (px-[374px]), full width on mobile */}
       <div
-        className="pointer-events-none absolute inset-y-0 z-10 w-40 max-md:w-24 left-[374px] max-md:left-0 bg-gradient-to-r from-white via-white/40 to-transparent"
+        className="pointer-events-none absolute inset-y-0 z-10 w-40 max-md:w-24 left-[374px] max-md:left-0 md:left-8 md:w-24 lg:left-[374px] lg:w-40 bg-gradient-to-r from-white via-white/40 to-transparent"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 z-10 w-40 max-md:w-24 right-[374px] max-md:right-0 bg-gradient-to-l from-white via-white/40 to-transparent"
+        className="pointer-events-none absolute inset-y-0 z-10 w-40 max-md:w-24 right-[374px] max-md:right-0 md:right-8 md:w-24 lg:right-[374px] lg:w-40 bg-gradient-to-l from-white via-white/40 to-transparent"
         aria-hidden
       />
     </section>
