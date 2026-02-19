@@ -45,7 +45,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="relative w-full bg-white border-b border-[var(--color-border)]">
+    <header className="relative w-full bg-white border-b border-[var(--color-border-warm)]">
       <motion.div
         className="w-full h-[72px] py-2.5 px-[84px] flex items-center gap-6 max-md:px-4 max-md:h-auto max-md:min-h-[72px] max-md:py-3 max-md:justify-between md:px-6 lg:px-[84px]"
         initial={{ opacity: 0, y: -20 }}
@@ -94,7 +94,7 @@ export function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="md:hidden absolute top-full left-0 right-0 z-50 bg-white border-b border-[var(--color-border)] shadow-lg overflow-hidden"
+            className="md:hidden absolute top-full left-0 right-0 z-50 bg-white border-b border-[var(--color-border-warm)] shadow-lg overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

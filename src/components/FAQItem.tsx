@@ -14,7 +14,7 @@ export function FAQItem({ question, answer, delay = 0 }: FAQItemProps) {
 
   return (
     <motion.div
-      className="w-full bg-white border border-[var(--color-border)] rounded-[13px] p-[30px] shadow-lg max-w-6xl mx-auto max-md:p-5 max-md:max-w-full"
+      className="w-full bg-white border border-[var(--color-border-warm)] rounded-2xl p-[30px] shadow-lg max-w-6xl mx-auto max-md:p-5 max-md:max-w-full"
       style={{
         boxShadow: "var(--shadow-card)"
       }}

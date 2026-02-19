@@ -32,7 +32,7 @@ export function FormPageLayout({
         aria-hidden
       >
         <div
-          className="absolute top-0 left-0 right-0 max-md:h-1/2 md:h-1/2 bg-[linear-gradient(to_bottom,#F7F9FA_50%,#F7F9FA_15%,transparent_100%)] pointer-events-none transition-all duration-500 ease-in-out"
+          className="absolute top-0 left-0 right-0 max-md:h-1/2 md:h-1/2 bg-[linear-gradient(to_bottom,var(--color-surface-cream)_50%,var(--color-surface-cream)_15%,transparent_100%)] pointer-events-none transition-all duration-500 ease-in-out"
           aria-hidden
         />
       </div>

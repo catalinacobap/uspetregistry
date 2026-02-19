@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${ptSerif.variable} ${inclusiveSans.variable} ${inter.variable} antialiased`}
+        className={`${ptSerif.variable} ${inclusiveSans.variable} ${inter.variable} antialiased bg-[var(--color-white)]`}
         suppressHydrationWarning
       >
         {children}

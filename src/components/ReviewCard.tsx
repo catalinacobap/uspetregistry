@@ -12,7 +12,7 @@ interface ReviewCardProps {
 export function ReviewCard({ icon, reviewText, author, delay = 0 }: ReviewCardProps) {
   return (
     <motion.div
-      className="flex flex-col w-[320px] min-h-[320px] p-[30px] gap-4 bg-white border border-[var(--color-border)] rounded-[13px] shadow-lg max-md:w-full max-md:min-w-0 max-md:max-w-full max-md:p-6 max-md:mx-auto max-md:min-h-0"
+      className="flex flex-col w-[320px] min-h-[320px] p-[30px] gap-4 bg-white border border-[var(--color-border-warm)] rounded-2xl shadow-lg max-md:w-full max-md:min-w-0 max-md:max-w-full max-md:p-6 max-md:mx-auto max-md:min-h-0"
       style={{
         boxShadow: "var(--shadow-card)"
       }}

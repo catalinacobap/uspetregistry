@@ -12,8 +12,8 @@ interface NavItemProps {
 
 const linkClass = (isActive: boolean) =>
   `font-serif text-sm leading-[18px] text-center flex-shrink-0 max-md:text-xs max-md:leading-4 max-md:py-1 max-md:px-2 block transition-all duration-200 ease-in-out ${
-    isActive ? "font-bold text-[var(--color-primary)]" : "font-normal text-gray-500"
-  } hover:text-black`;
+    isActive ? "font-bold text-[var(--color-primary)]" : "font-normal text-[var(--color-text-tertiary)]"
+  } hover:text-[var(--color-primary)]`;
 
 export function NavItem({ text, isActive = false, delay = 0, href }: NavItemProps) {
   const content = (
