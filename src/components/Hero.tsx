@@ -38,7 +38,7 @@ export function Hero() {
 
             {/* Hero Subtitle */}
             <motion.p
-              className="w-full max-w-[445px] h-auto text-[var(--color-body-dark)] font-serif font-normal text-[22px] leading-7 text-center max-md:w-full max-md:text-base max-md:leading-6 max-md:px-2 max-md:font-sans md:text-lg md:leading-7 lg:text-[22px]"
+              className="w-full max-w-[445px] h-auto text-[var(--color-body-dark)] font-serif font-normal text-[22px] leading-7 text-center max-md:w-full max-md:text-base max-md:leading-6 max-md:px-2 max-md:font-sans md:text-lg md:leading-7 lg:text-[22px] mt-4 max-md:mt-3 md:mt-5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
@@ -48,24 +48,35 @@ export function Hero() {
             </motion.p>
           </div>
 
-          {/* Hero Button Container */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.4 }}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link
-              href="/register"
-              className="flex justify-center items-center w-[182px] h-[53px] px-[10px] py-4 gap-2.5 bg-[var(--color-primary)] rounded-full cursor-pointer max-md:w-auto max-md:min-w-0 max-md:px-10 max-md:py-3.5 max-md:h-auto"
-              style={{ boxShadow: "var(--shadow-primary)" }}
+          {/* Button + refund line — tight gap between them */}
+          <div className="flex flex-col items-center gap-2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.4 }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span className="text-[var(--color-on-primary)] font-serif font-bold text-[12px] md:text-[16px] leading-tight text-center">
-                Get Started
-              </span>
-            </Link>
-          </motion.div>
+              <Link
+                href="/register"
+                className="flex justify-center items-center w-[182px] h-[53px] px-[10px] py-4 gap-2.5 bg-[var(--color-primary)] rounded-full cursor-pointer max-md:w-auto max-md:min-w-0 max-md:px-10 max-md:py-3.5 max-md:h-auto"
+                style={{ boxShadow: "var(--shadow-primary)" }}
+              >
+                <span className="text-[var(--color-on-primary)] font-serif font-bold text-[12px] md:text-[16px] leading-tight text-center">
+                  Get Started
+                </span>
+              </Link>
+            </motion.div>
+            <motion.p
+              className="w-full max-w-[553px] text-[var(--color-body-dark)] font-serif font-normal text-base leading-[21px] text-center max-md:text-sm max-md:px-0 md:px-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <span className="font-bold underline decoration-[var(--color-body-dark)] underline-offset-2">Full refund </span>
+              if your letter doesn&apos;t work
+            </motion.p>
+          </div>
         </div>
       </div>
 
@@ -90,13 +101,13 @@ export function Hero() {
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/70 text-[var(--color-primary)]" aria-hidden>
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               </span>
-              <span className="text-[var(--color-body-dark)] font-sans font-medium text-xs text-left">Trusted by landlords</span>
+              <span className="text-[var(--color-body-dark)] font-sans font-medium text-xs text-left">Trusted by landlords nationwide</span>
             </div>
             <div className="flex items-center gap-2 rounded-2xl bg-white/50 backdrop-blur-md border border-white/40 px-3 py-2.5 flex-1 min-w-0 justify-start">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/70 text-[var(--color-primary)]" aria-hidden>
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
               </span>
-              <span className="text-[var(--color-body-dark)] font-sans font-medium text-xs text-left"><span className="font-serif font-bold text-[var(--color-primary)]">Full refund</span> if it doesn&apos;t work</span>
+              <span className="text-[var(--color-body-dark)] font-sans font-medium text-xs text-left">Same-day processing</span>
             </div>
           </div>
         </div>
