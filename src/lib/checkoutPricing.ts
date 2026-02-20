@@ -1,5 +1,4 @@
-const STEP_PACKAGE = 24;
-const STEP_SPEED = 25;
+import { STEP_PACKAGE, STEP_SPEED } from "./registerSteps";
 
 export const PACKAGE_PRICES = { standard: 128, premium: 159 } as const;
 /** List prices before 20% discount - for display (Standard $160, Premium $199) */

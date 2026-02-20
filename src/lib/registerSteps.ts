@@ -259,3 +259,6 @@ export const REGISTER_STEPS: StepConfig[] = [
 ];
 
 export const TOTAL_REGISTER_STEPS = REGISTER_STEPS.length;
+
+export const STEP_PACKAGE = REGISTER_STEPS.findIndex((s) => s.type === "package") + 1;
+export const STEP_SPEED = REGISTER_STEPS.findIndex((s) => s.type === "speed") + 1;
